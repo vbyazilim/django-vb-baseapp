@@ -1,0 +1,2 @@
+recursive-include vb_baseapp/static *
+recursive-include vb_baseapp/templates *
