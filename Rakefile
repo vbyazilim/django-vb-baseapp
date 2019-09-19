@@ -8,7 +8,7 @@ task :clean do
 end
 
 desc "Install package for local development purpose"
-task :install do
+task :install => [:build] do
   system "pip install -e ."
 end
 
