@@ -1,10 +1,26 @@
 ![Python](https://img.shields.io/badge/python-3.7.3-green.svg)
 ![Django](https://img.shields.io/badge/django-2.2.4-green.svg)
-![Version](https://img.shields.io/badge/version-1.0.0-orange.svg)
+![Version](https://img.shields.io/badge/version-1.0.1-orange.svg)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/4c6aa76f09fd437eb3888855fccc9604)](https://www.codacy.com/manual/vigo/django-vb-baseapp?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=vbyazilim/django-vb-baseapp&amp;utm_campaign=Badge_Grade)
 
 # django-vb-baseapp
 
-@wip
+This is a helper app for https://github.com/vbyazilim/django-vb-admin
+
+## Features
+
+- 2 custom base models: `BaseModel` and `BaseModelWithSoftDelete`
+- 2 custom base model admins: `CustomBaseModelAdmin` and `CustomBaseModelAdminWithSoftDelete`
+- Soft deletion feature for model and model admin and admin actions
+- `pre_undelete` and `post_undelete` signals for soft delete operation
+- Pre enabled models admin site: `ContentTypeAdmin`, `LogEntryAdmin`, `PermissionAdmin`, `UserAdmin`
+- Timezone and locale middlewares
+- View level on screen debug feature
+- Handy utils: `console`, `console.dir()`, `numerify`, `save_file`, `SlackExceptionHandler`
+- File widget for Django Admin: `AdminImageFileWidget`
+- `OverwriteStorage` for overwriting file uploads
+- Custom file storage for missing files for development environment: `FileNotFoundFileSystemStorage`
+- Custom and configurable error page views for: `400`, `403`, `404`, `500`
 
 ---
 

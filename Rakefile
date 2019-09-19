@@ -1,11 +1,13 @@
 task :default => [:install]
 
+desc "Remove/Delete build..."
 task :clean do
   rm_rf %w(build dist)
   rm_rf Dir.glob("*.egg-info")
   puts "Build files are removed..."
 end
 
+desc "Install package for local development purpose"
 task :install do
   system "pip install -e ."
 end

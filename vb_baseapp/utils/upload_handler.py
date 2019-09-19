@@ -1,12 +1,9 @@
-WARNING: virtual_env dir does not exist: /Users/vigo/.virtualenvs/py373-package-test
 # pylint: disable=W0613
 
 import datetime
 import os
 
-from django.utils.text import slugify
-
-from ..utils import urlify
+from slugify import slugify
 
 __all__ = ['save_file']
 
@@ -38,7 +35,7 @@ def save_file(instance, filename, upload_to='upload/%Y/%m/%d/'):
 
     file_basename, file_extension = os.path.splitext(filename)
 
-    safe_basename = slugify(urlify(file_basename))
+    safe_basename = slugify(file_basename)
     extension = file_extension.lower()
     file_savename = f'{safe_basename}{extension}'
     now = datetime.datetime.now()
