@@ -156,6 +156,13 @@ class BaseModelWithSoftDelete(BaseModel):
     class Meta:  # pylint: disable=R0903
         abstract = True
 
+    def save(self, *args, **kwargs):  # pylint: disable=W0221
+        if self.status == BaseModel.STATUS_DELETED:
+            self.delete()
+        else:
+            self.deleted_at = None
+        super().save(*args, **kwargs)
+
     def hard_delete(self, using=None, keep_parents=False):
         return super().delete(using=using, keep_parents=keep_parents)
 
