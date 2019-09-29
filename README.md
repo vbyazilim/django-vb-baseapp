@@ -21,6 +21,7 @@ This is a helper app for https://github.com/vbyazilim/django-vb-admin
 - `OverwriteStorage` for overwriting file uploads
 - Custom file storage for missing files for development environment: `FileNotFoundFileSystemStorage`
 - Custom and configurable error page views for: `400`, `403`, `404`, `500`
+- Custom management command with basic output feature `CustomBaseCommand`
 
 ---
 
