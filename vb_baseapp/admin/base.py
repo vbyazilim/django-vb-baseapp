@@ -5,7 +5,8 @@ from django.db import models
 from django.forms import TextInput
 from django.utils.translation import ugettext_lazy as _
 
-from ..utils import console
+from console import console
+
 from ..widgets import AdminImageFileWidget
 from .actions import hard_delete_selected, recover_selected
 

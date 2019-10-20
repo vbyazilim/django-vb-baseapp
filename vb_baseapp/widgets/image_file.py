@@ -3,7 +3,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from PIL import Image
 
-from ..utils import console
+from console import console
 
 __all__ = ['AdminImageFileWidget']
 

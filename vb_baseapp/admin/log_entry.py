@@ -3,7 +3,8 @@ import logging
 from django.contrib import admin
 from django.contrib.admin.models import LogEntry
 
-from ..utils import console
+from console import console
+
 from .filters import LogEntryActionFlagListFilter
 
 __all__ = ['LogEntryAdmin']

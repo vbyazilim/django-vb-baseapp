@@ -1,7 +1,11 @@
 from django.db import connections
 from django.test import TestCase
 
+from console import console
+
 from .base_models import BasicPost
+
+console = console(source=__name__)
 
 
 class BaseModelTestCase(TestCase):

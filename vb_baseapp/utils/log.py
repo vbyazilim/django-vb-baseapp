@@ -7,7 +7,7 @@ from django.conf import settings
 from django.utils import timezone
 from django.utils.log import AdminEmailHandler
 
-from ..utils import console
+from console import console
 
 __all__ = ['SlackExceptionHandler']
 

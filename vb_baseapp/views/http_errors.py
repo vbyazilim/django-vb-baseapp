@@ -1,7 +1,7 @@
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import render
 
-from ..utils import console
+from console import console
 
 __all__ = ['custom_400_error', 'custom_403_error', 'custom_404_error', 'custom_500_error']
 

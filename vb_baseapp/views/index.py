@@ -1,7 +1,9 @@
 from django.views.generic import TemplateView
 
+from console import console
+
 from ..mixins import HtmlDebugMixin
-from ..utils import console, numerify
+from ..utils import numerify
 
 __all__ = ['IndexView']
 

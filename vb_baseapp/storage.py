@@ -5,7 +5,7 @@ from django.conf import settings
 from django.core.files import File
 from django.core.files.storage import FileSystemStorage
 
-from .utils import console
+from console import console
 
 __all__ = ['OverwriteStorage', 'FileNotFoundFileSystemStorage']
 

@@ -6,7 +6,7 @@ from django.contrib.auth.admin import (
 )
 from django.contrib.auth.models import User
 
-from ..utils import console
+from console import console
 
 __all__ = ['UserAdmin']
 

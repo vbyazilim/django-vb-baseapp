@@ -3,7 +3,7 @@ import logging
 from django.contrib import admin
 from django.contrib.auth.models import Permission
 
-from ..utils import console
+from console import console
 
 __all__ = ['PermissionAdmin']
 

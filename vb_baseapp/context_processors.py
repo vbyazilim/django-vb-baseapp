@@ -2,8 +2,15 @@
 
 import os
 
-__all__ = ['django_environment_variable']
+from django.conf import settings
+from django.utils import translation
+
+__all__ = ['common_environment_variables']
 
 
-def django_environment_variable(request):
-    return {'DJANGO_ENV': os.environ.setdefault('DJANGO_ENV', 'development')}
+def common_environment_variables(request):
+    return {
+        'DJANGO_ENV': os.environ.setdefault('DJANGO_ENV', 'development'),
+        'IS_DEBUG': settings.DEBUG,
+        'LANGUAGE_CODE': translation.get_language(),
+    }
