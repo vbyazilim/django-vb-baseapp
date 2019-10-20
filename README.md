@@ -1,5 +1,5 @@
-![Python](https://img.shields.io/badge/python-3.7.3-green.svg)
-![Django](https://img.shields.io/badge/django-2.2.4-green.svg)
+![Python](https://img.shields.io/badge/python-3.7.4-green.svg)
+![Django](https://img.shields.io/badge/django-2.2.6-green.svg)
 ![Version](https://img.shields.io/badge/version-1.0.1-orange.svg)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/4c6aa76f09fd437eb3888855fccc9604)](https://www.codacy.com/manual/vigo/django-vb-baseapp?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=vbyazilim/django-vb-baseapp&amp;utm_campaign=Badge_Grade)
 
@@ -43,7 +43,7 @@ All PR’s are welcome!
 
 1. `fork` (https://github.com/vbyazilim/django-vb-baseapp/fork)
 1. Create your `branch` (`git checkout -b my-features`)
-1. `commit` yours (`git commit -am 'added killer options'`)
+1. `commit` yours (`git commit -am 'Add killer features'`)
 1. `push` your `branch` (`git push origin my-features`)
 1. Than create a new **Pull Request**!
 
