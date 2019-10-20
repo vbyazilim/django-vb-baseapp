@@ -6,7 +6,7 @@ TEMPLATE_TESTS = """import logging
 
 from django.test import TestCase
 
-from vb_baseapp.utils import console
+from console import console
 
 __all__ = ['{app_name_title}BasicTestCase']
 

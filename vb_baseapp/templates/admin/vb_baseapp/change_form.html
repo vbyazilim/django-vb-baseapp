@@ -1,0 +1,11 @@
+{% extends "admin/change_form.html" %}
+{% load i18n admin_urls static custom_submit_row %}
+
+{% block submit_buttons_bottom %}
+    {% if show_softdeleted_object_message %}
+        <div class="softdeleted-object-message-row">
+            <p style="text-align: center;">{% blocktrans %}Warning! You are now editing <strong>soft deleted</strong> object. You can <strong>hard delete</strong>, <strong>edit</strong> or <strong>recover</strong> this object. Hard delete means there is no turning back! real delete...{% endblocktrans %}</p>
+        </div>
+    {% endif %}
+    {% custom_submit_row %}
+{% endblock %}

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: django-vb-baseapp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-12 12:33+0000\n"
-"PO-Revision-Date: 2019-08-12 15:06+0300\n"
+"POT-Creation-Date: 2019-11-26 08:49+0300\n"
+"PO-Revision-Date: 2019-11-26 08:49+0300\n"
 "Last-Translator: Uğur Özyılmazel <ugurozyilmazel@gmail.com>\n"
 "Language-Team: Turkish <ugurozyilmazel@gmail.com>\n"
 "Language: tr\n"
@@ -16,100 +16,191 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 2.2.3\n"
+"X-Generator: Poedit 2.2.4\n"
 
-#: applications/vb_baseapp/admin/actions/basemodel_with_softdelete.py:13
-#: applications/vb_baseapp/admin/actions/basemodel_with_softdelete.py:31
+#: admin/actions/basemodel_with_softdelete.py:25
+#: admin/actions/basemodel_with_softdelete.py:43
 msgid "1 record was"
 msgstr "1 kayıt"
 
-#: applications/vb_baseapp/admin/actions/basemodel_with_softdelete.py:15
-#: applications/vb_baseapp/admin/actions/basemodel_with_softdelete.py:33
+#: admin/actions/basemodel_with_softdelete.py:27
+#: admin/actions/basemodel_with_softdelete.py:45
 #, python-format
 msgid "%(number_of_rows)s records were"
 msgstr "%(number_of_rows)s kayıt"
 
-#: applications/vb_baseapp/admin/actions/basemodel_with_softdelete.py:16
+#: admin/actions/basemodel_with_softdelete.py:28
 #, python-format
 msgid "%(message_bit)s successfully marked as active"
 msgstr "%(message_bit)s aktif olarak işaretlendi"
 
-#: applications/vb_baseapp/admin/actions/basemodel_with_softdelete.py:34
+#: admin/actions/basemodel_with_softdelete.py:46
 #, python-format
 msgid "%(message_bit)s deleted"
 msgstr "%(message_bit)s silindi"
 
-#: applications/vb_baseapp/admin/actions/basemodel_with_softdelete.py:40
+#: admin/actions/basemodel_with_softdelete.py:52
 #, python-format
 msgid "Cannot delete %(name)s"
 msgstr "%(name)s silinemiyor"
 
-#: applications/vb_baseapp/admin/actions/basemodel_with_softdelete.py:42
+#: admin/actions/basemodel_with_softdelete.py:54
 msgid "Are you sure?"
 msgstr "Emin misiniz?"
 
-#: applications/vb_baseapp/admin/base.py:60
+#: admin/base.py:46
+msgid "activity state"
+msgstr "aktiflik durumu"
+
+#: admin/base.py:50
+msgid "inactives"
+msgstr "pasifler"
+
+#: admin/base.py:98
+#, python-format
+msgid "\"%(obj)s (ID: %(id)d)\" recovered successfully."
+msgstr "“%(obj)s (ID: %(id)d)” başarılı bir şekilde geri getirildi."
+
+#: admin/base.py:100
+#, python-format
+msgid "%(num)d object is recovered in total."
+msgid_plural "%(num)d objects are recovered in total."
+msgstr[0] "Toplamda %(num)d nesne geri getirildi."
+msgstr[1] "Toplamda %(num)d nesne geri getirildi."
+
+#: admin/base.py:102
+#, python-format
+msgid "\"%(obj)s\" is really deleted."
+msgstr "“%(obj)s” nesnesi gerçekten silindi."
+
+#: admin/base.py:104
+#, python-format
+msgid "%(num)d object is wiped in total."
+msgid_plural "%(num)d objects are wiped in total."
+msgstr[0] "Toplamda %(num)d nesne silindi."
+msgstr[1] "Toplamda %(num)d nesne silindi."
+
+#: admin/base.py:192
 #, python-format
 msgid "Recover selected %(verbose_name_plural)s"
 msgstr "Seçili silinmiş %(verbose_name_plural)s nesnelerini geri getir"
 
-#: applications/vb_baseapp/admin/base.py:68
+#: admin/base.py:201
 #, python-format
 msgid "Hard delete selected %(verbose_name_plural)s"
 msgstr "Seçili %(verbose_name_plural)s nesnelerini gerçekten sil"
 
-#: applications/vb_baseapp/apps.py:7 applications/vb_baseapp/apps.py:8
-msgid "vb baseapp"
+#: admin/filters/log_entry.py:21
+msgid "Add"
 msgstr ""
 
-#: applications/vb_baseapp/models/base.py:134
-msgid "Offline"
-msgstr "Kapalı"
+#: admin/filters/log_entry.py:21
+msgid "Change"
+msgstr ""
 
-#: applications/vb_baseapp/models/base.py:135
-msgid "Online"
-msgstr "Yayında"
+#: admin/filters/log_entry.py:21
+msgid "Delete"
+msgstr ""
 
-#: applications/vb_baseapp/models/base.py:136
-msgid "Deleted"
-msgstr "Silinmiş"
+#: admin/filters/log_entry.py:25
+msgid "Action"
+msgstr ""
 
-#: applications/vb_baseapp/models/base.py:137
-msgid "Draft"
-msgstr "Taslak"
-
-#: applications/vb_baseapp/models/base.py:140
+#: models/base.py:23
 msgid "Created At"
 msgstr "Oluşturma Tarihi"
 
-#: applications/vb_baseapp/models/base.py:141
+#: models/base.py:24
 msgid "Updated At"
 msgstr "Güncelleme Tarihi"
 
-#: applications/vb_baseapp/models/base.py:142
-msgid "Status"
-msgstr "Durum"
-
-#: applications/vb_baseapp/models/base.py:152
+#: models/base.py:31
 msgid "Deleted At"
 msgstr "Silinme Tarihi"
 
-#: applications/vb_baseapp/templates/index.html:4
+#: templates/admin/hard_delete_selected_confirmation.html:14
+msgid "Home"
+msgstr "Anasayfa"
+
+#: templates/admin/hard_delete_selected_confirmation.html:17
+msgid "Delete multiple objects"
+msgstr ""
+
+#: templates/admin/hard_delete_selected_confirmation.html:23
+#, python-format
+msgid ""
+"Deleting the selected %(objects_name)s would result in deleting related "
+"objects, but your account doesn't have permission to delete the following "
+"types of objects:"
+msgstr ""
+
+#: templates/admin/hard_delete_selected_confirmation.html:30
+#, python-format
+msgid ""
+"Deleting the selected %(objects_name)s would require deleting the following "
+"protected related objects:"
+msgstr ""
+
+#: templates/admin/hard_delete_selected_confirmation.html:37
+#, python-format
+msgid ""
+"Are you sure you want to delete the selected %(objects_name)s? All of the "
+"following objects and their related items will be deleted:"
+msgstr ""
+
+#: templates/admin/hard_delete_selected_confirmation.html:39
+msgid "Objects"
+msgstr ""
+
+#: templates/admin/hard_delete_selected_confirmation.html:50
+msgid "Yes, I'm sure"
+msgstr ""
+
+#: templates/admin/hard_delete_selected_confirmation.html:51
+msgid "No, take me back"
+msgstr ""
+
+#: templates/admin/vb_baseapp/change_form.html:7
+msgid ""
+"Warning! You are now editing <strong>soft deleted</strong> object. You can "
+"<strong>hard delete</strong>, <strong>edit</strong> or <strong>recover</"
+"strong> this object. Hard delete means there is no turning back! real "
+"delete..."
+msgstr ""
+"Dikkkat! fiziksel olarak <strong>silinmemiş</strong> ama silinmiş gibi "
+"işleyen bir nesne üzerinde işlem yapmaktasınız. Bu aşamada nesneyi gerçekten "
+"(fiziksel olarak) <strong>silebilir</strong>, <strong>düzenleyebilir</"
+"strong> ya da tekrar <strong>geri</strong> getirebilirsiniz. Eğer gerçek "
+"silme yaparsanız bunun geri dönüşü yok…"
+
+#: templates/admin/vb_baseapp/submit_line.html:7
+msgid "go back"
+msgstr "geri dön"
+
+#: templates/admin/vb_baseapp/submit_line.html:9
+msgid "recover"
+msgstr "geri getir"
+
+#: templates/admin/vb_baseapp/submit_line.html:11
+msgid "hard delete"
+msgstr "gerçekten sil"
+
+#: templates/index.html:4
 msgid "Example page"
 msgstr "Örnek sayfa"
 
-#: applications/vb_baseapp/templates/index.html:9
+#: templates/index.html:10
 msgid "Welcome to Django"
 msgstr "Django'ya hoşgeldiniz"
 
-#: applications/vb_baseapp/templates/index.html:10
+#: templates/index.html:11
 msgid "It worked!"
 msgstr "Çalışıyor!"
 
-#: applications/vb_baseapp/templates/index.html:14
+#: templates/index.html:15
 msgid "Variable"
 msgstr "Değişken"
 
-#: applications/vb_baseapp/templates/index.html:15
+#: templates/index.html:16
 msgid "Value"
 msgstr "Değer"

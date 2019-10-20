@@ -1,5 +1,5 @@
 """
-BaseModelWithSoftDelete template for model generator
+CustomBaseModelWithSoftDelete template for model generator
 """
 
 TEMPLATE_MODEL_SOFTDELETEMODEL = """import logging
@@ -7,8 +7,9 @@ TEMPLATE_MODEL_SOFTDELETEMODEL = """import logging
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
-from vb_baseapp.models import BaseModelWithSoftDelete
-from vb_baseapp.utils import console
+from console import console
+
+from vb_baseapp.models import CustomBaseModelWithSoftDelete
 
 __all__ = ['{model_name_title}']
 
@@ -16,7 +17,7 @@ logger = logging.getLogger('app')
 console = console(source=__name__)
 
 
-class {model_name_title}(BaseModelWithSoftDelete):
+class {model_name_title}(CustomBaseModelWithSoftDelete):
     title = models.CharField(max_length=255, verbose_name=_('title'))
 
     class Meta:

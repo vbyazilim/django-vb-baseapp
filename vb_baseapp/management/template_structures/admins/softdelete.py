@@ -1,13 +1,16 @@
 """
-BaseModelWithSoftDelete template for model generator
+CustomBaseModelWithSoftDelete template for model generator
 """
 
 TEMPLATE_ADMIN_SOFTDELETEMODEL = """import logging
 
 from django.contrib import admin
 
-from vb_baseapp.admin import CustomBaseModelAdminWithSoftDelete
-from vb_baseapp.utils import console
+from console import console
+
+from vb_baseapp.admin import (
+    CustomBaseModelAdminWithSoftDelete,
+)
 
 from ..models import {model_name_title}
 
@@ -19,9 +22,7 @@ console = console(source=__name__)
 
 @admin.register({model_name_title})
 class {model_name_title}Admin(CustomBaseModelAdminWithSoftDelete):
-    # sticky_list_filter = None
     # hide_deleted_at = False
-    pass
 
 """
 

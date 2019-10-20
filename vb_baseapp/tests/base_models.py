@@ -2,10 +2,13 @@
 
 from django.db import models
 
-from ..models import BaseModel, BaseModelWithSoftDelete
+from ..models import (
+    CustomBaseModel,
+    CustomBaseModelWithSoftDelete,
+)
 
 
-class BasicPost(BaseModel):
+class BasicPost(CustomBaseModel):
     title = models.CharField(max_length=255)
 
     class Meta:
@@ -15,7 +18,7 @@ class BasicPost(BaseModel):
         return self.title
 
 
-class Category(BaseModelWithSoftDelete):
+class Category(CustomBaseModelWithSoftDelete):
     title = models.CharField(max_length=255)
 
     class Meta:
@@ -25,7 +28,7 @@ class Category(BaseModelWithSoftDelete):
         return self.title
 
 
-class Post(BaseModelWithSoftDelete):
+class Post(CustomBaseModelWithSoftDelete):
     category = models.ForeignKey(to='Category', on_delete=models.CASCADE, related_name='posts')
     title = models.CharField(max_length=255)
 
@@ -36,7 +39,7 @@ class Post(BaseModelWithSoftDelete):
         return self.title
 
 
-class Person(BaseModelWithSoftDelete):
+class Person(CustomBaseModelWithSoftDelete):
     name = models.CharField(max_length=255)
 
     class Meta:
@@ -46,7 +49,7 @@ class Person(BaseModelWithSoftDelete):
         return self.name
 
 
-class Member(BaseModelWithSoftDelete):
+class Member(CustomBaseModelWithSoftDelete):
     title = models.CharField(max_length=255)
     members = models.ManyToManyField(to='Person')
 

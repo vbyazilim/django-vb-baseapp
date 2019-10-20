@@ -7,13 +7,12 @@ from django.test import (
 )
 from django.urls import path, reverse
 
+from console import console
 from vb_baseapp.views import (
     custom_400_error,
     custom_403_error,
     custom_500_error,
 )
-
-from ..utils import console
 
 console = console(source=__name__)
 

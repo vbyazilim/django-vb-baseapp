@@ -1,13 +1,14 @@
 """
-BaseModel template for model generator
+CustomBaseModel template for model generator
 """
 
 TEMPLATE_ADMIN_BASEMODEL = """import logging
 
 from django.contrib import admin
 
+from console import console
+
 from vb_baseapp.admin import CustomBaseModelAdmin
-from vb_baseapp.utils import console
 
 from ..models import {model_name_title}
 
@@ -19,7 +20,6 @@ console = console(source=__name__)
 
 @admin.register({model_name_title})
 class {model_name_title}Admin(CustomBaseModelAdmin):
-    # sticky_list_filter = None
     pass
 
 """

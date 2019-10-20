@@ -1,0 +1,12 @@
+{% extends "admin/submit_line.html" %}
+{% load i18n admin_urls %}
+
+{% block submit-row %}
+    {% if show_goback %}
+        {% url opts|admin_urlname:'changelist' as goback_url %}
+        <a class="vb-box-button align-right go-back" href="{% add_preserved_filters goback_url %}">{{ _('go back')|upper }}</a>
+    {% endif %}
+    {% if show_recover %}<input type="submit" class="recover" value="{{ _('recover')|upper }}" name="_recoverdeleted">{% endif %}
+    {{ block.super }}
+    {% if show_hard_delete %}<input type="submit" class="hard-delete" value="{{ _('hard delete')|upper }}" name="_harddelete">{% endif %}
+{% endblock %}

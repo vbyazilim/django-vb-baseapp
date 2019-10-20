@@ -1,4 +1,4 @@
-# pylint: disable=W0212,W0143,R0201
+# pylint: disable=W0212,W0143,R0201,R0912,E1101
 
 import logging
 from collections import Counter
@@ -10,159 +10,34 @@ from django.utils.translation import ugettext_lazy as _
 
 from console import console
 
+from .managers import CustomBaseModelWithSoftDeleteManager
 from .signals import post_undelete, pre_undelete
 
-__all__ = ['BaseModel', 'BaseModelWithSoftDelete']
+__all__ = ['CustomBaseModel', 'CustomBaseModelWithSoftDelete']
 
 console = console(source=__name__)
 logger = logging.getLogger('app')
 
 
-class BaseModelQuerySet(models.QuerySet):
-    """
-    Common QuerySet for BaseModel and BaseModelWithSoftDelete.
-
-    Available methods are:
-
-    - `.actives()` : filters `status` is `STATUS_ONLINE`
-    - `.deleted()` : filters `status` is `STATUS_DELETED`
-    - `.offlines()`: filters `status` is `STATUS_OFFLINE`
-    - `.drafts()`  : filters `status` is `STATUS_DRAFT`
-
-    """
-
-    def actives(self):
-        return self.filter(status=self.model.STATUS_ONLINE)
-
-    def deleted(self):
-        return self.filter(status=self.model.STATUS_DELETED)
-
-    def offlines(self):
-        return self.filter(status=self.model.STATUS_OFFLINE)
-
-    def drafts(self):
-        return self.filter(status=self.model.STATUS_DRAFT)
-
-
-class BaseModelWithSoftDeleteQuerySet(BaseModelQuerySet):
-    """
-    Available methods are:
-
-    - `.all()`        : filter deleted records. returns actives, offlines and drafts.
-    - `.actives()`    : filters `status` is `STATUS_ONLINE`
-    - `.offlines()`   : filters `status` is `STATUS_OFFLINE`
-    - `.drafts()`     : filters `status` is `STATUS_DRAFT`
-    - `.deleted()`    : returns soft deleted objects.
-    - `.delete()`     : soft deletes given objects.
-    - `.undelete()`   : recovers given soft deleted object. fixes status and deleted_at values.
-    - `.hard_delete()`: real delete method. no turning back!
-
-    """
-
-    def all(self):  # noqa: A003
-        return self.filter(deleted_at__isnull=True).exclude(status=self.model.STATUS_DELETED)
-
-    def delete(self):
-        return self._delete_or_undelete()
-
-    def undelete(self):
-        return self._delete_or_undelete(undelete=True)
-
-    def hard_delete(self):
-        return super().delete()
-
-    def _delete_or_undelete(self, undelete=False):
-        processed_instances = {}
-        call_method = 'undelete' if undelete else 'delete'
-
-        for model_instance in self:
-            _count, model_information = getattr(model_instance, call_method)()
-            for (app_label, row_amount) in model_information.items():
-                processed_instances.setdefault(app_label, 0)
-                processed_instances[app_label] = processed_instances[app_label] + row_amount
-        return (sum(processed_instances.values()), processed_instances)
-
-
-class BaseModelManager(models.Manager):
-    def get_queryset(self):
-        return BaseModelQuerySet(self.model, using=self._db)
-
-    def actives(self):
-        return self.get_queryset().actives()
-
-    def deleted(self):
-        return self.get_queryset().deleted()
-
-    def offlines(self):
-        return self.get_queryset().offlines()
-
-    def drafts(self):
-        return self.get_queryset().drafts()
-
-
-class BaseModelWithSoftDeleteManager(BaseModelManager):
-    """
-    This is a manager for `BaseModelWithSoftDelete` instances.
-    """
-
-    def get_queryset(self):
-        return BaseModelWithSoftDeleteQuerySet(self.model, using=self._db)
-
-    def all(self):  # noqa: A003
-        return self.get_queryset().all()
-
-    def delete(self):
-        return self.get_queryset().delete()
-
-    def undelete(self):
-        return self.get_queryset().undelete()
-
-    def hard_delete(self):
-        return self.get_queryset().hard_delete()
-
-
-class BaseModel(models.Model):
-    """
-    Use this model for common functionality
-    """
-
-    STATUS_OFFLINE = 0
-    STATUS_ONLINE = 1
-    STATUS_DELETED = 2
-    STATUS_DRAFT = 3
-
-    STATUS_CHOICES = (
-        (STATUS_OFFLINE, _('Offline')),
-        (STATUS_ONLINE, _('Online')),
-        (STATUS_DELETED, _('Deleted')),
-        (STATUS_DRAFT, _('Draft')),
-    )
-
+class CustomBaseModel(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, verbose_name=_('Created At'))
     updated_at = models.DateTimeField(auto_now=True, verbose_name=_('Updated At'))
-    status = models.IntegerField(choices=STATUS_CHOICES, default=STATUS_ONLINE, verbose_name=_('Status'))
-
-    objects = BaseModelManager()
 
     class Meta:  # pylint: disable=R0903
         abstract = True
 
 
-class BaseModelWithSoftDelete(BaseModel):
-
+class CustomBaseModelWithSoftDelete(CustomBaseModel):
     deleted_at = models.DateTimeField(null=True, blank=True, verbose_name=_('Deleted At'))
 
-    objects = BaseModelWithSoftDeleteManager()
+    objects = CustomBaseModelWithSoftDeleteManager()
 
     class Meta:  # pylint: disable=R0903
         abstract = True
 
-    def save(self, *args, **kwargs):  # pylint: disable=W0221
-        if self.status == BaseModel.STATUS_DELETED:
-            self.delete()
-        else:
-            self.deleted_at = None
-        super().save(*args, **kwargs)
+    @property
+    def is_deleted(self):
+        return bool(self.deleted_at)
 
     def hard_delete(self, using=None, keep_parents=False):
         return super().delete(using=using, keep_parents=keep_parents)
@@ -196,15 +71,12 @@ class BaseModelWithSoftDelete(BaseModel):
 
         required_pre_signal = models.signals.pre_delete
         required_post_signal = models.signals.post_delete
-        required_status = BaseModel.STATUS_DELETED
         required_deleted_at = timezone.now()
 
         if undelete:
             required_pre_signal = pre_undelete
             required_post_signal = post_undelete
-            required_status = BaseModel.STATUS_ONLINE
             required_deleted_at = None
-
         with transaction.atomic(using=using, savepoint=False):
 
             # pre signal...
@@ -216,14 +88,26 @@ class BaseModelWithSoftDelete(BaseModel):
             for queryset in items.get('fast_deletes'):
                 count = queryset.count()
 
-                if issubclass(queryset.model, BaseModelWithSoftDelete):
+                if issubclass(queryset.model, CustomBaseModelWithSoftDelete):
                     # this happens in database layer...
                     # try to mark as deleted if the model is inherited from
-                    # BaseModelWithSoftDelete
-                    count = queryset.update(status=required_status, deleted_at=required_deleted_at)
+                    # CustomBaseModelWithSoftDelete
+                    count = queryset.update(deleted_at=required_deleted_at)
                 else:
-                    # well, just delete it...
-                    count = queryset._raw_delete(using=using)
+                    skip_raw_delete = False
+                    for field in queryset.model._meta.fields:
+                        if (
+                            hasattr(field, 'related_model')
+                            and field.related_model
+                            and field.related_model != self._meta.model
+                            and hasattr(field.related_model, 'mro')
+                            and CustomBaseModelWithSoftDelete in field.related_model.mro()
+                        ):
+                            skip_raw_delete = True
+                            break
+                    if not skip_raw_delete:
+                        count = queryset._raw_delete(using=using)
+
                 deleted_counter[queryset.model._meta.label] += count
 
             for model, instances in items.get('data').items():
@@ -231,8 +115,8 @@ class BaseModelWithSoftDelete(BaseModel):
                 queryset = model.objects.filter(id__in=pk_list)
                 count = queryset.count()
 
-                if issubclass(model, BaseModelWithSoftDelete):
-                    count = queryset.update(status=required_status, deleted_at=required_deleted_at)
+                if issubclass(model, CustomBaseModelWithSoftDelete):
+                    count = queryset.update(deleted_at=required_deleted_at)
 
                 deleted_counter[model._meta.label] += count
 

@@ -5,3 +5,53 @@ table#result_list img.thumbnail {
 .admin-image-preview img.thumbnail {
     max-height: 200px;
 }
+
+div.softdeleted-object-message-row {
+    background: red;
+    color: white;
+    padding: 1rem 1rem .5rem 1rem;
+    margin-bottom: 2rem;
+}
+
+.submit-row input.recover {
+    background: green;
+}
+
+.submit-row input.hard-delete {
+    float: left;
+    background: #ba2121;
+}
+
+.submit-row a.vb-box-button {
+    display: inline-block;
+    border-radius: 4px;
+    padding: 10px 15px;
+    height: 15px;
+    line-height: 15px;
+}
+
+.submit-row a.vb-box-button.align-right {
+    float: right;
+    margin: 0 0 0 8px;
+}
+
+.submit-row a.vb-box-button.go-back {
+    background: #79aec8;
+    color: #fff;
+}
+.submit-row a.vb-box-button.go-back:focus,
+.submit-row a.vb-box-button.go-back:hover,
+.submit-row a.vb-box-button.go-back:active {
+    background: #79aec8;
+    color: #ff0;
+}
+
+/*.submit-row a.vb-box-button.align-right {*/
+/*    float: right;*/
+/*    margin: 0 0 0 8px;*/
+/*}*/
+/**/
+/*.submit-row a.vb-box-button.align-left {*/
+/*    float: left;*/
+/*    margin: 0 8px 0 0;*/
+/*}*/

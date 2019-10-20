@@ -7,7 +7,7 @@ TEMPLATE_MODEL_DJANGO = """import logging
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
-from vb_baseapp.utils import console
+from console import console
 
 __all__ = ['{model_name_title}']
 

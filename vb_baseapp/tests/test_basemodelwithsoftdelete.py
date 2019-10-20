@@ -8,8 +8,8 @@ from .base_models import Category, Member, Person, Post
 console = console(source=__name__)
 
 
-class BaseModelWithSoftDeleteTestCase(TestCase):
-    """Unit tests of BaseModelWithSoftDelete"""
+class CustomBaseModelWithSoftDeleteTestCase(TestCase):
+    """Unit tests of CustomBaseModelWithSoftDelete"""
 
     @classmethod
     def setUpTestData(cls):  # noqa: N802

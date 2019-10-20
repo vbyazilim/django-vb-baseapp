@@ -6,8 +6,8 @@ TEMPLATE_VIEWS = """import logging
 
 from django.views.generic.base import TemplateView
 
+from console import console
 from vb_baseapp.mixins import HtmlDebugMixin
-from vb_baseapp.utils import console
 
 __all__ = ['{app_name_title}View']
 

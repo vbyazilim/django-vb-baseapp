@@ -1,3 +1,5 @@
+# pylint: disable=R1721
+
 import logging
 
 from django.contrib import admin
@@ -8,7 +10,7 @@ from django.contrib.admin.models import (
 )
 from django.utils.translation import ugettext_lazy as _
 
-from ...utils import console
+from console import console
 
 __all__ = ['LogEntryActionFlagListFilter']
 

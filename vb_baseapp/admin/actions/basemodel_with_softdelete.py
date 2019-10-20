@@ -4,10 +4,22 @@ from django.core.exceptions import PermissionDenied
 from django.template.response import TemplateResponse
 from django.utils.translation import ugettext_lazy as _
 
+from console import console
+
 __all__ = ['recover_selected', 'hard_delete_selected']
+
+console = console(source=__name__)
 
 
 def recover_selected(modeladmin, request, queryset):
+    """
+
+    TODO: Implement this method!, try to inject intermediate page which is
+    enabled on `hard_delete_selected` method. Inform user about which
+    related records will be recovered...
+
+    """
+
     number_of_rows_recovered, __ = queryset.undelete()  # __ = recovered_items
     if number_of_rows_recovered == 1:
         message_bit = _('1 record was')

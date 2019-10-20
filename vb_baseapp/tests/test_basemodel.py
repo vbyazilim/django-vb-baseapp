@@ -8,8 +8,8 @@ from .base_models import BasicPost
 console = console(source=__name__)
 
 
-class BaseModelTestCase(TestCase):
-    """Unit tests of BaseModel"""
+class CustomBaseModelTestCase(TestCase):
+    """Unit tests of CustomBaseModel"""
 
     @classmethod
     def setUpTestData(cls):  # noqa: N802
