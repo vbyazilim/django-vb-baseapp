@@ -31,18 +31,17 @@ class CustomBaseModelWithSoftDeleteTestCase(TestCase):
     def test_softdelete_for_many_to_many(self):
         deleted_member = self.member.delete()
         self.assertEqual(deleted_member, (3, {'vb_baseapp.Member': 1, 'vb_baseapp.Member_members': 2}))
-        self.assertQuerysetEqual(Member.objects.all(), [])
+        self.assertQuerysetEqual(Member.objects.all(), ['<Member: Membership>'])
         self.assertQuerysetEqual(Member.objects.actives(), [])
-        self.assertQuerysetEqual(Member.objects.deleted(), ['<Member: Membership>'])
-        self.assertQuerysetEqual(self.member.members.all(), [])
+        self.assertQuerysetEqual(Member.objects.inactives(), ['<Member: Membership>'])
+        self.assertQuerysetEqual(self.member.members.actives(), ['<Person: Person 1>', '<Person: Person 2>'], ordered=False)
 
     def test_basemodelwithsoftdelete_fields(self):
         """Test fields"""
 
         self.assertEqual(self.category.pk, self.category.id)
-        self.assertEqual(self.category.status, Post.STATUS_ONLINE)
         for post in self.posts:
-            self.assertEqual(post.status, Post.STATUS_ONLINE)
+            self.assertIsNone(post.deleted_at)
 
     def test_basemodelwithsoftdelete_queryset(self):
         """Test queryset"""
@@ -51,27 +50,27 @@ class CustomBaseModelWithSoftDeleteTestCase(TestCase):
             self.category.posts.all().order_by('id'), ['<Post: Python post 1>', '<Post: Python post 2>']
         )
         self.assertQuerysetEqual(Category.objects.actives(), ['<Category: Python>'])
-        self.assertQuerysetEqual(Category.objects.offlines(), [])
-        self.assertQuerysetEqual(Category.objects.deleted(), [])
-        self.assertQuerysetEqual(Category.objects.drafts(), [])
+        self.assertQuerysetEqual(Category.objects.inactives(), [])
 
     def test_soft_deletetion(self):
         """Test soft deletion"""
 
         deleted_category = self.category.delete()
         self.assertEqual(deleted_category, (3, {'vb_baseapp.Category': 1, 'vb_baseapp.Post': 2}))
-        self.assertQuerysetEqual(Category.objects.deleted(), ['<Category: Python>'])
+        self.assertQuerysetEqual(Category.objects.inactives(), ['<Category: Python>'])
         self.assertQuerysetEqual(
-            Post.objects.deleted().order_by('id'), ['<Post: Python post 1>', '<Post: Python post 2>']
+            Post.objects.inactives().order_by('id'), ['<Post: Python post 1>', '<Post: Python post 2>']
         )
 
     def test_softdelete_undelete(self):
         """Test undelete feature"""
+
         deleted_category = self.category.delete()
         self.assertEqual(deleted_category, (3, {'vb_baseapp.Category': 1, 'vb_baseapp.Post': 2}))
+
         undeleted_items = self.category.undelete()
         self.assertEqual(undeleted_items, (3, {'vb_baseapp.Category': 1, 'vb_baseapp.Post': 2}))
-        self.assertQuerysetEqual(Post.objects.deleted(), [])
+        self.assertQuerysetEqual(Post.objects.inactives(), [])
 
     def test_softdelete_all(self):
         deleted_posts = Post.objects.delete()
