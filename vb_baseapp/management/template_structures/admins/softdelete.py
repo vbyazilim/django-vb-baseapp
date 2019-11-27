@@ -7,7 +7,6 @@ TEMPLATE_ADMIN_SOFTDELETEMODEL = """import logging
 from django.contrib import admin
 
 from console import console
-
 from vb_baseapp.admin import (
     CustomBaseModelAdminWithSoftDelete,
 )

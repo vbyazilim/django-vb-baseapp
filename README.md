@@ -277,7 +277,6 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
 from console import console
-
 from vb_baseapp.models import CustomBaseModelWithSoftDelete
 
 __all__ = ['Post']
@@ -317,7 +316,6 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
 from console import console
-
 from vb_baseapp.models import CustomBaseModelWithSoftDelete
 
 __all__ = ['Category']
@@ -349,7 +347,6 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
 from console import console
-
 from vb_baseapp.models import CustomBaseModelWithSoftDelete
 
 __all__ = ['Tag']
@@ -384,6 +381,11 @@ Migrations for 'blog':
     - Create model Post
 
 $ python manage.py migrate
+
+# or
+
+$ rake db:migrate
+
 Operations to perform:
   Apply all migrations: admin, auth, blog, contenttypes, sessions
 Running migrations:
@@ -400,7 +402,6 @@ import logging
 from django.contrib import admin
 
 from console import console
-
 from vb_baseapp.admin import (
     CustomBaseModelAdminWithSoftDelete,
 )

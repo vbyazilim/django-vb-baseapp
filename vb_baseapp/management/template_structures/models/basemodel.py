@@ -8,7 +8,6 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
 from console import console
-
 from vb_baseapp.models import CustomBaseModel
 
 __all__ = ['{model_name_title}']

@@ -7,7 +7,6 @@ TEMPLATE_ADMIN_BASEMODEL = """import logging
 from django.contrib import admin
 
 from console import console
-
 from vb_baseapp.admin import CustomBaseModelAdmin
 
 from ..models import {model_name_title}
