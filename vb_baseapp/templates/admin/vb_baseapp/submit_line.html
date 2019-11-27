@@ -2,7 +2,7 @@
 {% load i18n admin_urls %}
 
 {% block submit-row %}
-    {% if show_goback %}
+    {% if show_goback and not is_popup %}
         {% url opts|admin_urlname:'changelist' as goback_url %}
         <a class="vb-box-button align-right go-back" href="{% add_preserved_filters goback_url %}">{{ _('go back')|upper }}</a>
     {% endif %}

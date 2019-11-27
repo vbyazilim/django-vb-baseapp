@@ -134,6 +134,11 @@ Now, we have a ready Django project. Let’s check;
 
 ```bash
 $ python manage.py runserver_plus
+
+# or
+
+$ rake
+
 INFO |  * Running on http://127.0.0.1:8000/ (Press CTRL+C to quit)
 INFO |  * Restarting with stat
 Performing system checks...
@@ -152,6 +157,11 @@ Let’s create a new app!
 
 ```bash
 $ python manage.py create_app blog
+
+# or
+
+$ rake new:application[blog]
+
 "blog" application created.
 
 
@@ -199,6 +209,10 @@ models:
 ```bash
 $ python manage.py create_model blog post softdelete
 
+# or
+
+$ rake new:model[blog,post,softdelete]
+
 models/post.py created.
 admin/post.py created.
 post model added to models/__init__.py
@@ -213,6 +227,11 @@ post model added to admin/__init__.py
     Please check your models before running `makemigrations` ok?
 
 $ python manage.py create_model blog category softdelete
+
+# or
+
+$ rake new:model[blog,category,softdelete]
+
 models/category.py created.
 admin/category.py created.
 category model added to models/__init__.py
@@ -227,6 +246,11 @@ category model added to admin/__init__.py
     Please check your models before running `makemigrations` ok?
 
 $ python manage.py create_model blog tag softdelete
+
+# or
+
+$ rake new:model[blog,tag,softdelete]
+
 models/tag.py created.
 admin/tag.py created.
 tag model added to models/__init__.py
@@ -239,7 +263,6 @@ tag model added to admin/__init__.py
     - `blog/admin/tag.py`
 
     Please check your models before running `makemigrations` ok?
-
 ```
 
 Let’s fix models before creating and executing migrations:
@@ -254,6 +277,7 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
 from console import console
+
 from vb_baseapp.models import CustomBaseModelWithSoftDelete
 
 __all__ = ['Post']
@@ -293,6 +317,7 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
 from console import console
+
 from vb_baseapp.models import CustomBaseModelWithSoftDelete
 
 __all__ = ['Category']
@@ -324,6 +349,7 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
 from console import console
+
 from vb_baseapp.models import CustomBaseModelWithSoftDelete
 
 __all__ = ['Tag']
@@ -333,7 +359,7 @@ console = console(source=__name__)
 
 
 class Tag(CustomBaseModelWithSoftDelete):
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=255, verbose_name=_('name'))
 
     class Meta:
         app_label = 'blog'
@@ -346,11 +372,16 @@ Let’s create and run migration file:
 
 ```bash
 $ python manage.py makemigrations --name create_post_category_and_tag
+
+# or
+
+$ rake db:update[blog,create_post_category_and_tag]
+
 Migrations for 'blog':
   applications/blog/migrations/0001_create_post_category_and_tag.py
     - Create model Category
-    - Create model Post
     - Create model Tag
+    - Create model Post
 
 $ python manage.py migrate
 Operations to perform:
@@ -369,6 +400,7 @@ import logging
 from django.contrib import admin
 
 from console import console
+
 from vb_baseapp.admin import (
     CustomBaseModelAdminWithSoftDelete,
 )
@@ -395,6 +427,28 @@ is removed from **development** settings, you can type any password :)
 ```bash
 $ python manage.py createsuperuser --username="${USER}" --email="your@email.com"
 $ python manage.py runserver_plus
+
+# or
+
+$ rake
+
+INFO |  * Running on http://127.0.0.1:8000/ (Press CTRL+C to quit)
+INFO |  * Restarting with stat
+Performing system checks...
+
+System check identified no issues (0 silenced).
+
+Django version X.X.X, using settings 'config.settings.development'
+Development server is running at http://[127.0.0.1]:8000/
+Using the Werkzeug debugger (http://werkzeug.pocoo.org/)
+Quit the server with CONTROL-C.
+WARNING |  * Debugger is active!
+WARNING |  * Debugger PIN disabled. DEBUGGER UNSECURED!
+INFO | GET | 302 | /admin/
+INFO | GET | 200 | /admin/login/?next=/admin/
+INFO | GET | 404 | /favicon.ico
+:
+:
 ```
 
 Now open `http://127.0.0.1:8000/admin/` and add new blog post! Add different
@@ -593,6 +647,21 @@ This model admin overrides `models.ImageField` form field and displays fancy
 thumbnail for images. By default, uses cached paginator and sets `show_full_result_count`
 to `False` for performance improvements.
 
+#### Model Admin Properties
+
+`show_goback_button` is set to `True` by default. You can disable via;
+
+```python
+class ExampleAdmin(CustomBaseModelAdminWithSoftDelete):
+    # ...
+    show_goback_button = False
+    # ...
+```
+
+- `show_full_result_count` is set to `False` by default.
+- `hide_deleted_at` is set to `True` by default. This means, you will not see
+that field while editing the instance.
+
 Example for `Post` model admin (*auto generated*).
 
 ```python
@@ -735,6 +804,476 @@ If you don’t want to extend from `templates/base.html` you can use your
 own template. You just need to add `{% hdbg %}` tag in to your template if
 you still want to enable this feature.
 
+---
+
+## Reminders
+
+Default timezone is set to `UTC`, please change this or use according to your
+needs.
+
+```python
+# config/settings/base.py
+# ...
+TIME_ZONE = 'UTC'
+# ...
+```
+
+---
+
+## Rake Tasks
+
+You have some handy rake tasks if you like to use `ruby` :)
+
+```bash
+$ rake -T
+
+rake db:migrate[database]                                        # Run migration for given database (default: 'default')
+rake db:roll_back[name_of_application,name_of_migration]         # Roll-back (name of application, name of migration)
+rake db:shell                                                    # run database shell ..
+rake db:show[name_of_application]                                # Show migrations for an application (default: 'all')
+rake db:update[name_of_application,name_of_migration,is_empty]   # Update migration (name of application, name of migration?, is empty?)
+rake default                                                     # Default task: run_server+
+rake locale:compile                                              # Compile locale dictionary
+rake locale:update                                               # Update locale dictionary
+rake new:application[name_of_application]                        # Create new Django application
+rake new:model[name_of_application,name_of_model,type_of_model]  # Create new Model for given application: django,basemodel,softdelete
+rake runserver                                                   # Run server
+rake runserver_plus                                              # Run server+
+rake shell[repl]                                                 # Run shell+ avail: ptpython,ipython,bpython default: ptpython
+rake test:browse_coverage[port]                                  # Browse test coverage
+rake test:coverage[cli_args]                                     # Show test coverage (default: '--show-missing --ignore-errors --skip-covered')
+rake test:run[name_of_application,verbose]                       # Run tests for given application
+```
+
+Default task is `run_server`. Just type `rake` that’s it! `runserver` uses
+`runserver_plus`. This means you have lots of debugging options!
+
+### `rake` or `rake runserver_plus` or `rake default`
+
+Runs `DJANGO_COLORS='dark' python manage.py runserver_plus --nothreading`
+
+### `rake runserver`
+
+This is Django’s builtin server: `python manage.py runserver`
+
+### `rake db:migrate[database]`
+
+Migrates database with given database name. Default is `default`. If you like
+to work multiple databases:
+
+```python
+# example configuration
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db', 'development.sqlite3'),
+    },
+    'my_database': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db', 'my_database.sqlite3'),
+    }
+}
+```
+
+You can just call `rake db:migrate` or specify different database like: 
+`rake db:migrate[my_database]` :)
+
+### `rake db:show[name_of_application]`
+
+Show migration information:
+
+```bash
+$ rake db:show[blog]
+blog
+ [X] 0001_create_post_category_and_tag
+ [ ] 0002_add_spot_field_to_post
+
+$ rake db:migrate
+Running migration for: default database...
+Operations to perform:
+  Apply all migrations: admin, auth, blog, contenttypes, sessions
+Running migrations:
+  Applying blog.0002_add_spot_field_to_post... OK
+```
+
+### `rake db:roll_back[name_of_application,name_of_migration]`
+
+Your database must be rollable :) To see available migrations: 
+`rake db:roll_back[NAME_OF_YOUR_APPLICATION]`. Look at the list and choose your
+target migration. You can use just the number as shortcut. In this example,
+we’ll roll back to migration number 1, which has a name: `0001_create_post_category_and_tag`
+
+```bash
+$ rake db:roll_back[blog]
+Please select your migration:
+blog
+ [X] 0001_create_post_category_and_tag
+ [X] 0002_add_spot_field_to_post
+
+$ rake db:roll_back[blog,1]
+Operations to perform:
+  Target specific migration: 0001_create_post_category_and_tag, from blog
+Running migrations:
+  Rendering model states... DONE
+  Unapplying blog.0002_add_spot_field_to_post... OK
+
+$ rake db:show[blog]
+blog
+ [X] 0001_create_post_category_and_tag
+ [ ] 0002_add_spot_field_to_post
+```
+
+### `rake db:update[name_of_application,name_of_migration,is_empty]`
+
+When you add/change something in your model, you need to create migrations.
+Let’s say you have added new field to `Post` model in your `blog` app:
+
+If you don’t provide `name_of_migration` param, you’ll endup with auto
+generated name such as `000X_auto_YYYMMDD_HHMM`. You can also create
+empty migration via 3^rd parameter: `yes`
+
+```bash
+$ rake db:update[blog,add_spot_field_to_post]
+Migrations for 'blog':
+  applications/blog/migrations/0002_add_spot_field_to_post.py
+    - Add field spot to post
+
+$ rake db:update[blog,add_new_field_to_post,yes]  # empty migration example
+Migrations for 'blog':
+  applications/blog/migrations/0003_add_new_field_to_post.py
+
+$ cat applications/blog/migrations/0003_add_new_field_to_post.py
+```
+
+empty migration output:
+
+```python
+# Generated by Django 2.2.6 on 2019-11-27 11:13
+
+from django.db import migrations
+
+
+class Migration(migrations.Migration):
+
+    dependencies = [
+        ('blog', '0002_add_spot_field_to_post'),
+    ]
+
+    operations = [
+    ]
+```
+
+### `rake db:shell`
+
+Runs default database client.
+
+### `rake new:application[name_of_application]`
+
+Creates new application with given application name!
+
+```bash
+$ rake new:application[blog]
+```
+
+### `rake new:model[name_of_application,name_of_model,type_of_model]`
+
+Creates new model! Available model types are:
+
+- `django` (default),
+- `basemodel`
+- `softdelete`
+
+```bash
+$ rake new:model[blog,Post]                # will create model using Django’s `models.Model`
+$ rake new:model[blog,Post,basemodel]      # will create model using our `CustomBaseModel`
+$ rake new:model[blog,Post,softdelete]     # will create model using our `CustomBaseModelWithSoftDelete`
+```
+
+### `rake locale:compile` and `rake locale:update`
+
+When you make changes in your application related to locales, run: `rake locale:update`.
+When you finish editing your `django.po` file, run `rake locale:compile`.
+
+### `rake shell[repl]`
+
+Runs Django repl/shell with use `shell_plus` of [django-extensions][01].
+ `rake shell`. This loads everything to your shell! Also you can see the
+SQL statements while playing in shell. We have couple different repls:
+
+1. `ptpython`
+1. `bpython`
+1. `ipython`
+
+Default repl is: `ptpython`
+
+```bash
+$ rake shell
+$ rake shell[bpython]
+$ rake shell[ipython]
+```
+
+### `rake test:run[name_of_application,verbose]`
+
+If you don’t provide `name_of_application` default value will be `applications`. 
+`verbose` is `1` by default.
+
+Examples:
+
+```bash
+$ rake test:run
+$ rake test:run[vb_baseapp,2]
+```
+
+### `rake test:coverage[cli_args]`
+
+Get the test report. Default is `--show-missing --ignore-errors --skip-covered` for
+`cli_args` parameter.
+
+```bash
+$ rake test:coverage
+```
+
+### `rake test:browse_coverage[port]`
+
+Serves generated html coverages under `htmlcov` folder via `python`. Default port
+is `9001`
+
+---
+
+## Run Tests Manually
+
+```bash
+$ DJANGO_ENV=test python manage.py test vb_baseapp -v 2                                 # or
+$ DJANGO_ENV=test python manage.py test vb_baseapp.tests.test_user.CustomUserTestCase   # run single unit
+$ rake test:run[vb_baseapp]
+```
+
+---
+
+## Manual Usage
+
+Let’s assume you need a model called: `Page`. Create a file under `YOUR_APP/models/page.py`:
+
+```python
+# example for Django’s default model
+# YOUR_APP/models/page.py
+
+from django.db import models
+
+__all__ = ['Page',]
+
+class Page(models.Model):
+    # define your fields here...
+    pass
+
+# YOUR_APP/models/__init__.py
+# append:
+from .page import *
+```
+
+or, you can use `CustomBaseModel` or `CustomBaseModelWithSoftDelete`:
+
+```bash
+from django.db import models
+
+from vb_baseapp.models import CustomBaseModelWithSoftDelete
+
+__all__ = ['Page']
+
+class Page(CustomBaseModelWithSoftDelete):
+    # define your fields here...
+    pass
+```
+
+Now make migrations etc... Use it as `from YOUR_APP.models import Page` :)
+
+---
+
+## Goodies
+
+We have some mini helpers and tools shipped with `vb_baseapp`.
+
+### `vb_baseapp.utils.numerify`
+
+Little helper for catching **QUERY_STRING** parameters for numerical values:
+
+```python
+from baseapp.utils import numerify
+
+>>> numerify("1")
+1
+>>> numerify("1a")
+-1
+>>> numerify("ab")
+-1
+>>> numerify("abc", default=44)
+44
+```
+
+### `vb_baseapp.utils.save_file`
+
+While using `FileField`, sometimes you need to handle uploaded files. In this
+case, you need to use `upload_to` attribute. Take a look at the example:
+
+```python
+from vb_baseapp.utils import save_file as custom_save_file
+:
+:
+:
+class User(AbstractBaseUser, PermissionsMixin):
+    :
+    :
+    avatar = models.FileField(
+        upload_to=save_user_avatar,
+        verbose_name=_('Profile Image'),
+        null=True,
+        blank=True,
+    )
+    :
+    :
+```
+
+`save_user_avatar` returns `custom_save_file`’s return value. Default
+configuration of for `custom_save_file` is 
+`save_file(instance, filename, upload_to='upload/%Y/%m/%d/')`. Uploads are go to
+such as `MEDIA_ROOT/upload/2017/09/21/`...
+
+Make your custom uploads like:
+
+```python
+from vb_baseapp.utils import save_file as custom_save_file
+
+def my_custom_uploader(instance, filename):
+    # do your stuff
+    # at the end, call:
+    return custom_save_file(instance, filename, upload_to='images/%Y/')
+
+
+class MyModel(models.Model):
+    image = models.FileField(
+        upload_to='my_custom_uploader',
+        verbose_name=_('Profile Image'),
+    )
+```
+
+### SlackExceptionHandler
+
+`vb_baseapp.utils.log.SlackExceptionHandler`
+
+You can send errors/exceptions to [slack](https://api.slack.com) channel.
+Just create a slack app, get the webhook URL and set as `SLACK_HOOK`
+environment variable. Due to slack message size limitation, `traceback`
+is disabled.
+
+Example message contains:
+
+- http status
+- error message
+- exception message
+- user.id or None
+- full path
+
+```bash
+http status: 500
+ERROR (internal IP): Internal Server Error: /__baseapp__/
+Exception: User matching query does not exist.
+user_id: anonymous (None)
+full path: /__baseapp__/?foo=!
+```
+
+You can enable/disable in `config/settings/production.py` / `config/settings/heroku.py`:
+
+```python
+:
+:
+    'loggers': {
+        'django.request': {'handlers': ['mail_admins', 'slack'], 'level': 'ERROR', 'propagate': False},  # remove 'slack'
+    }
+:
+:
+```
+
+### `vb_baseapp.storage`
+
+#### `FileNotFoundFileSystemStorage`
+
+After shipping/deploying Django app, users start to upload files, right ?
+Then you need to implement new features etc. You can get the dump of the
+database but what about uploaded files ? Sometimes files are too much or
+too big. If you call, let’s say, a model’s `ImageField`’s `url` property,
+local dev server logs lot’s of **file not found** errors to console.
+
+Also breaks the look of application via broken image signs in browser.
+
+Now, you won’t see any errors... `FileNotFoundFileSystemStorage` is a
+fake storage that handles non existing files. Returns `file-not-found.jpg`
+from `static/images/` folder.
+
+This is **development purposes** only! Do not use in the production!
+
+You don’t need to change/add anything to your code... It’s embeded to
+`config/settings/development.py`:
+
+```python
+:
+:
+DEFAULT_FILE_STORAGE = 'vb_baseapp.storage.FileNotFoundFileSystemStorage'
+:
+```
+
+You can disable if you like to...
+
+#### `OverwriteStorage`
+
+`OverwriteStorage` helps you to overwrite file when uploading from django
+admin. Example usage:
+
+```python
+# in a model
+from vb_baseapp.utils.storage image OverwriteStorage
+
+class MyModel(models.Model):
+    :
+    :
+    photo = models.ImageField(
+        upload_to=save_media_photo,
+        storage=OverwriteStorage(),
+    )
+    :
+    :
+```
+
+Add `storage` option in your file related fields.
+
+#### `AdminImageFileWidget`
+
+Use this widget in your admin forms. By default, It’s already enabled in
+`CustomBaseModelAdmin`. You can also inject this to Django’s default `ModelAdmin`
+via example:
+
+```python
+from vb_baseapp.widgets import AdminImageFileWidget
+
+class MyAdmin(admin.ModelAdmin):
+    formfield_overrides = {
+        models.FileField: {'widget': AdminImageFileWidget},
+    }
+```
+
+This widget uses `Pillow` (*Python Image Library*) which ships with your `base.pip`
+requirements file. Show image preview, width x height if the file is image.
+
+#### `context_processors.py`
+
+By default, `vb_baseapp` injects few variables to you context:
+
+- `DJANGO_ENV`
+- `IS_DEBUG`
+- `LANGUAGE_CODE`
+- `CURRENT_GIT_TAG`
+- `CURRENT_PYTHON_VERSION`
+- `CURRENT_DJANGO_VERSION`
 
 ---
 
@@ -763,6 +1302,11 @@ All PR’s are welcome!
 ---
 
 ## Change Log
+
+**2019-11-27**
+
+- Version bump
+- Ready to use...
 
 **2019-08-07**
 
