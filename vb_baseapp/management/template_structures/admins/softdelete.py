@@ -22,6 +22,7 @@ console = console(source=__name__)
 
 @admin.register({model_name_title})
 class {model_name_title}Admin(CustomBaseModelAdminWithSoftDelete):
+    pass
     # hide_deleted_at = False
 
 """

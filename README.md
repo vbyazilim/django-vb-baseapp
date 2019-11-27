@@ -13,6 +13,12 @@ $ pip install django-vb-admin
 $ django-vb-admin -h
 ```
 
+Also, package is available on pip but dependent to `django-vb-admin`:
+
+```bash
+$ pip install django-vb-baseapp
+```
+
 ## Features
 
 - Two abstract custom base models: `CustomBaseModel` and `CustomBaseModelWithSoftDelete`
