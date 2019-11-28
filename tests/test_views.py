@@ -8,18 +8,26 @@ from django.test import (
 from django.urls import path, reverse
 
 from console import console
+
 from vb_baseapp.views import (
     custom_400_error,
     custom_403_error,
+    custom_404_error,
     custom_500_error,
 )
 
 console = console(source=__name__)
 
-urlpatterns = [path('500/', custom_500_error), path('403/', custom_403_error), path('400/', custom_400_error)]
+urlpatterns = [
+    path('500/', custom_500_error),
+    path('403/', custom_403_error),
+    path('400/', custom_400_error),
+    path('404/', custom_404_error),
+]
 
 handler400 = custom_400_error
 handler403 = custom_403_error
+handler404 = custom_404_error
 handler500 = custom_500_error
 
 
@@ -35,6 +43,9 @@ class ViewTestCase(TestCase):
         templates = list(map(lambda t: t.name, response.templates))
         self.assertTrue('index.html' in templates)
 
+
+@override_settings(ROOT_URLCONF=__name__)
+class CustomServerErrorViewTests(SimpleTestCase):
     def test_404_error_view(self):
         response = self.client.get('/this/url/does/not/exists/')
 
@@ -43,9 +54,6 @@ class ViewTestCase(TestCase):
         templates = list(map(lambda t: t.name, response.templates))
         self.assertTrue('custom_errors/404.html' in templates)
 
-
-@override_settings(ROOT_URLCONF=__name__)
-class CustomServerErrorViewTests(SimpleTestCase):
     def test_500_error_view(self):
         response = self.client.get('/500/')
         self.assertEqual(response.status_code, 500)

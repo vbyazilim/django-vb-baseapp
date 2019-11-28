@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/vbyazilim/django-vb-baseapp.svg?branch=master)](https://travis-ci.org/vbyazilim/django-vb-baseapp)
 ![Python](https://img.shields.io/badge/python-3.7.4-green.svg)
 ![Django](https://img.shields.io/badge/django-2.2.6-green.svg)
 ![Version](https://img.shields.io/badge/version-1.0.6-orange.svg)
@@ -1303,6 +1304,11 @@ All PR’s are welcome!
 ---
 
 ## Change Log
+
+**2019-11-28**
+
+- Add tests and travis integration
+- Version bump
 
 **2019-11-27**
 

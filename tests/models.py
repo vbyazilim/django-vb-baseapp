@@ -2,7 +2,7 @@
 
 from django.db import models
 
-from ..models import (
+from vb_baseapp.models import (
     CustomBaseModel,
     CustomBaseModelWithSoftDelete,
 )
@@ -11,18 +11,12 @@ from ..models import (
 class BasicPost(CustomBaseModel):
     title = models.CharField(max_length=255)
 
-    class Meta:
-        managed = False
-
     def __str__(self):
         return self.title
 
 
 class Category(CustomBaseModelWithSoftDelete):
     title = models.CharField(max_length=255)
-
-    class Meta:
-        managed = False
 
     def __str__(self):
         return self.title
@@ -32,18 +26,12 @@ class Post(CustomBaseModelWithSoftDelete):
     category = models.ForeignKey(to='Category', on_delete=models.CASCADE, related_name='posts')
     title = models.CharField(max_length=255)
 
-    class Meta:
-        managed = False
-
     def __str__(self):
         return self.title
 
 
 class Person(CustomBaseModelWithSoftDelete):
     name = models.CharField(max_length=255)
-
-    class Meta:
-        managed = False
 
     def __str__(self):
         return self.name
@@ -52,9 +40,6 @@ class Person(CustomBaseModelWithSoftDelete):
 class Member(CustomBaseModelWithSoftDelete):
     title = models.CharField(max_length=255)
     members = models.ManyToManyField(to='Person')
-
-    class Meta:
-        managed = False
 
     def __str__(self):
         return self.title
