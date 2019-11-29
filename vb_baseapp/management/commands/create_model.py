@@ -1,16 +1,13 @@
 # pylint: disable=R0201,R0914
 
 import os
-import re
 from importlib import import_module
 
 from django.apps import apps
 from django.conf import settings
-from django.core.management.base import (
-    BaseCommand,
-    CommandError,
-)
+from django.core.management.base import CommandError
 
+from ..base import CustomBaseCommand, get_need_model_names
 from ..template_structures import admins as admin_templates
 from ..template_structures import models as model_templates
 
@@ -28,17 +25,17 @@ TEMPLATE_ADMINS = {
 
 USER_REMINDER = """
 
-    `{model_name}` related files created successfully:
+    `{model_name_for_class}` related files created successfully:
 
-    - `{app_name}/models/{model_name_lower}.py`
-    - `{app_name}/admin/{model_name_lower}.py`
+    - `{app_name}/models/{model_name_for_file}.py`
+    - `{app_name}/admin/{model_name_for_file}.py`
 
     Please check your models before running `makemigrations` ok?
 
 """
 
 
-class Command(BaseCommand):
+class Command(CustomBaseCommand):
     help = 'Creates models/MODEL.py, admin/MODEL.py for given application'  # noqa: A003
 
     MODEL_TYPE_CHOISES = ['django', 'basemodel', 'softdelete']
@@ -56,10 +53,10 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         app_name = options.pop('app_name')[0]
-
-        model_name = options.pop('model_name')[0].lower()
-        model_name_title = model_name.title()
+        model_name = options.pop('model_name')[0]
         model_type = options.pop('model_type')
+
+        model_name_for_file, model_name_for_class, model_name_for_verbose_name = get_need_model_names(model_name)
 
         try:
             import_module(app_name)
@@ -73,39 +70,35 @@ class Command(BaseCommand):
 
         app_dir = os.path.join(settings.BASE_DIR, 'applications', app_name)
 
-        dash_seperated_file_base_name = '_'.join([m for m in re.split('([A-Z][a-z]+)', model_name) if m])
-
-        model_file = os.path.join(app_dir, 'models', '{0}.py'.format(dash_seperated_file_base_name.lower()))
+        model_file = os.path.join(app_dir, 'models', f'{model_name_for_file}.py')
         model_init_file = os.path.join(app_dir, 'models', '__init__.py')
 
-        admin_file = os.path.join(app_dir, 'admin', '{0}.py'.format(dash_seperated_file_base_name.lower()))
+        admin_file = os.path.join(app_dir, 'admin', f'{model_name_for_file}.py')
         admin_init_file = os.path.join(app_dir, 'admin', '__init__.py')
 
         content_model_file = TEMPLATE_MODELS[model_type].format(
-            model_name=model_name, app_name=app_name, model_name_title=model_name_title
+            model_name_for_class=model_name_for_class,
+            app_name=app_name,
+            model_name_for_verbose_name=model_name_for_verbose_name,
         )
-        content_init_file = 'from .{0} import *\n'.format(dash_seperated_file_base_name.lower())
-
-        content_admin_file = TEMPLATE_ADMINS[model_type].format(
-            model_name=model_name, app_name=app_name, model_name_title=model_name_title
-        )
+        content_init_file = f'from .{model_name_for_file} import *\n'
+        content_admin_file = TEMPLATE_ADMINS[model_type].format(model_name_for_class=model_name_for_class)
 
         self.create_or_modify_file(model_file, content_model_file)
-        self.stdout.write(self.style.SUCCESS('models/{0} created.'.format(os.path.basename(model_file))))
+        self.out(f'models/{os.path.basename(model_file)} created.')
 
         self.create_or_modify_file(admin_file, content_admin_file)
-        self.stdout.write(self.style.SUCCESS('admin/{0} created.'.format(os.path.basename(admin_file))))
+        self.out(f'admin/{os.path.basename(admin_file)} created.')
 
         self.create_or_modify_file(model_init_file, content_init_file, 'a')
-        self.stdout.write(self.style.SUCCESS('{0} model added to models/__init__.py'.format(model_name)))
+        self.out(f'{model_name} model added to models/__init__.py')
 
         self.create_or_modify_file(admin_init_file, content_init_file, 'a')
-        self.stdout.write(self.style.SUCCESS('{0} model added to admin/__init__.py'.format(model_name)))
+        self.out(f'{model_name} model added to admin/__init__.py')
 
-        self.stdout.write(
-            self.style.NOTICE(
-                USER_REMINDER.format(
-                    app_name=app_name, model_name=model_name, model_name_lower=dash_seperated_file_base_name.lower()
-                )
-            )
+        self.out(
+            USER_REMINDER.format(
+                app_name=app_name, model_name_for_class=model_name_for_class, model_name_for_file=model_name_for_file
+            ),
+            'n',
         )
