@@ -7,14 +7,14 @@
 # django-vb-baseapp
 
 This is a helper app for https://github.com/vbyazilim/django-vb-admin
-Before you use this, you need to install `django-vb-admin`:
+and ships with while installation:
 
 ```bash
 $ pip install django-vb-admin
 $ django-vb-admin -h
 ```
 
-Also, package is available on pip but dependent to `django-vb-admin`:
+It’s also available on PyPI and available via:
 
 ```bash
 $ pip install django-vb-baseapp
@@ -23,12 +23,12 @@ $ pip install django-vb-baseapp
 ## Features
 
 - Two abstract custom base models: `CustomBaseModel` and `CustomBaseModelWithSoftDelete`
-- Two custom base model admins for `CustomBaseModelAdmin` and `CustomBaseModelAdminWithSoftDelete`
+- Two custom base model admins: `CustomBaseModelAdmin` and `CustomBaseModelAdminWithSoftDelete`
 - Soft deletion feature and admin actions for `CustomBaseModelAdminWithSoftDelete`
 - `pre_undelete` and `post_undelete` signals for **soft delete** operation
 - Pre enabled models admin site: `ContentTypeAdmin`, `LogEntryAdmin`, `PermissionAdmin`, `UserAdmin`
 - Timezone and locale middlewares
-- HTML level onscreen debugging feature for views!
+- Onscreen debugging feature for views! (Template layer...)
 - Handy utils: `numerify`, `save_file`, `SlackExceptionHandler`
 - Fancy file widget: `AdminImageFileWidget` for `ImageField` on admin by default
 - `OverwriteStorage` for overwriting file uploads
@@ -58,7 +58,8 @@ $ pip install django-vb-baseapp
 
 ## Tutorial
 
-Let’s build a basic blog with categories! First, create your virtual environment:
+Let’s build a basic blog with categories and tags! First, create a virtual
+environment:
 
 ```bash
 # via builtin
@@ -69,7 +70,7 @@ $ source my_env/bin/activate
 $ mkvirtualenv my_env
 ```
 
-Now, create you database;
+Now, create a postgresql database;
 
 ```bash
 $ createdb my_project_dev
@@ -154,7 +155,7 @@ WARNING |  * Debugger is active!
 WARNING |  * Debugger PIN disabled. DEBUGGER UNSECURED!
 ```
 
-Let’s create a new app!
+Let’s create a **blog** app!
 
 ```bash
 $ python manage.py create_app blog
@@ -198,14 +199,14 @@ Open `http://127.0.0.1:8000/__blog__/`. Also, another builtin app is running;
 `http://127.0.0.1:8000/__vb_baseapp__/`. You can remove `__vb_baseapp__`
 config from `config/urls.py`.
 
-Now let’s add some models. We have 3 choices as parameter:
+Now let’s add some models. We have 3 choices as parameters:
 
 1. `django`: Uses Django’s `models.Model`
-1. `basemodel`: Uses `CustomBaseModel`
+1. `basemodel`: Uses `CustomBaseModel` (which inherits from `models.Model`)
 1. `softdelete`: Uses `CustomBaseModelWithSoftDelete`
 
-We’ll use soft deletable model feature. Let’s create `Post` and `Category`
-models:
+We’ll use soft-deletable model to demonstrate soft-delete features. Let’s
+create `Post`, `Category` and `Tag` models:
 
 ```bash
 $ python manage.py create_model blog post softdelete
@@ -306,7 +307,7 @@ class Post(CustomBaseModelWithSoftDelete):
         return self.title
 ```
 
-and `Category`:
+and `Category` model:
 
 ```python
 # blog/models/category.py
@@ -337,7 +338,7 @@ class Category(CustomBaseModelWithSoftDelete):
         return self.title
 ```
 
-and `Tag`:
+and `Tag` model:
 
 ```python
 # blog/models/tag.py
@@ -393,7 +394,8 @@ Running migrations:
   Applying blog.0001_create_post_category_and_tag... OK
 ```
 
-Let’s tweak `blog/admin/post.py`:
+Now we have a model which has relations to other models via `ForeignKey` and
+`ManyToMany` level. Let’s tweak `blog/admin/post.py`:
 
 ```python
 # blog/admin/post.py
@@ -423,7 +425,7 @@ class PostAdmin(CustomBaseModelAdminWithSoftDelete):
     # hide_deleted_at = False
 ```
 
-Let’s create super user and jump in to admin pages. `AUTH_PASSWORD_VALIDATORS`
+Let’s create a super user and jump in to admin pages. `AUTH_PASSWORD_VALIDATORS`
 is removed from **development** settings, you can type any password :)
 
 ```bash
@@ -453,17 +455,19 @@ INFO | GET | 404 | /favicon.ico
 :
 ```
 
-Now open `http://127.0.0.1:8000/admin/` and add new blog post! Add different
-categories and few posts for those categories then open 
+Now open `http://127.0.0.1:8000/admin/` and add a new blog post! 
+Create different categories and tags. Then open 
 `http://127.0.0.1:8000/admin/blog/category/` page. 
+
 In the Action menu, you’ll have couple extra options:
 
 - Delete selected categories
 - Recover selected categories (*Appears if you are filtering inactive records*)
 - Hard delete selected categories
 
-Now, delete one or more category. Check **activity state** filter for both post and
-category models. You can recover deleted items from the action menu too.
+Now, delete one or more categories or tags. Check **activity state** filter
+for post, category and tag models. You can recover deleted items from the
+action menu too.
 
 ---
 
@@ -476,17 +480,7 @@ This is a common model. By default, `CustomBaseModel` contains these fields:
 - `created_at`
 - `updated_at`
 
-We are overriding the default manager. `CustomBaseModel` uses `CustomBaseModelQuerySet` as
-manager, `CustomBaseModelWithSoftDelete` uses `CustomBaseModelWithSoftDeleteManager`.
-`CustomBaseModelWithSoftDelete` has one extra field called `deleted_at`
-
-You can make these queries:
-
-```python
->>> Post.objects.actives()      # filters: non-soft-deleted items
->>> Post.objects.inactives()    # filters: soft-deleted items
->>> Post.objects.all()          # returns everything (both actives and inactives)
-```
+Almost a default `models.Model` with two extra fields.
 
 ### `CustomBaseModelWithSoftDelete`
 
@@ -504,19 +498,21 @@ a dictionary with the number of deletion-marks per object type.
 You can call `hard_delete()` method to delete an instance or a queryset
 actually.
 
+This model uses `CustomBaseModelWithSoftDeleteManager` as default manager.
+
 #### How soft-delete works?
 
-When you call `.delete()` method of a model instance or queryset, app
-sets `deleted_at` attribute to **NOW** all the way down through releated
-foreignkey and many-to-many fields. This means, you still keep everything.
+When you call `.delete()` method of a model instance or queryset, model manager
+sets `deleted_at` attribute to **NOW** all the way down through related
+`ForeignKey` and `ManyToMany` fields. This means, you still keep everything.
 
 Nothing is actually deleted, therefore your database constraints are still
-work fine. When you access deleted (*inactive*) object from admin site,
-you’ll see "deleted" text prefix in your foreignkey and many-to-many fields
-if your related objecst are `CustomBaseModelWithSoftDelete` instances.
+work fine. When you access deleted (*inactive*) object from admin site, you’ll
+see "deleted" text prefix in your related form fields if your related objects
+are `CustomBaseModelWithSoftDelete` instances.
 
 When you click **recover** button in the same page, all related and soft-deleted
-objects’ `deleted_at` set to `NULL` and available again.
+objects’ `deleted_at` value will set to `NULL` and available again.
 
 Please use `.actives()` queryset method instead of `.all()`. Why? `.all()`
 method is untouched and works as default. When `all()` called, returning
@@ -627,11 +623,10 @@ Execution time: 0.000387s [Database: default]
 `CustomBaseModelWithSoftDeleteQuerySet` has these query options:
 
 - `.actives()` : filters if `CustomBaseModelWithSoftDelete.deleted_at` is set to `NULL`
-- `.inactives()` : filters if `CustomBaseModelWithSoftDelete.deleted_at` is set not `NULL`
+- `.inactives()` : filters if `CustomBaseModelWithSoftDelete.deleted_at` is not set to `NULL`
 - `.delete()` : soft delete on given object/queryset.
 - `.undelete()` : recover soft deleted on given object/queryset.
 - `.hard_delete()` : this is real delete. this method erases given object/queryset and there is no turning back!.
-
 
 When soft-delete enabled (*during model creation*), Django admin will
 automatically use `CustomBaseModelAdminWithSoftDelete` which is inherited from:
@@ -643,8 +638,9 @@ automatically use `CustomBaseModelAdminWithSoftDelete` which is inherited from:
 
 ### `CustomBaseModelAdmin`, `CustomBaseModelAdminWithSoftDelete`
 
-Inherits from `admin.ModelAdmin`. When model is created via `rake
-new:model...` or via management command, admin file is generated automatically.
+Inherits from `admin.ModelAdmin`. When model is created via `rake new:model...` 
+or via management command, admin file is generated automatically.
+
 This model admin overrides `models.ImageField` form field and displays fancy
 thumbnail for images. By default, uses cached paginator and sets `show_full_result_count`
 to `False` for performance improvements.
@@ -729,7 +725,7 @@ this middleware activates timezone for user.
 
 ## Custom Error Pages
 
-You have browsable (only in development mode) and customizable error handler
+You have a browsable (*only in development mode*) and customizable error handler
 functions and html templates now!. Templates are under `templates/custom_errors/`
 folder.
 
@@ -805,6 +801,214 @@ only if the settings `DEBUG` is set to `True`.
 If you don’t want to extend from `templates/base.html` you can use your
 own template. You just need to add `{% hdbg %}` tag in to your template if
 you still want to enable this feature.
+
+We have some mini helpers and tools shipped with `vb_baseapp`.
+
+### `console`
+
+This little tool helps you to output anything to console. This works only
+in test and development mode. If you forget console declarations in your
+code, do not worry... console checks `DJANGO_ENV` environment variable...
+
+```python
+from console import console
+
+console = console(source=__name__)
+
+console('hello', 'world')
+```
+
+You can inspect python object via `.dir()` method:
+
+```python
+console.dir([])
+
+p = Post.objects.actives().first()
+console.dir(p)
+```
+
+More information is available [here][vb-console]
+
+### `vb_baseapp.utils.numerify`
+
+Little helper for catching **QUERY_STRING** parameters for numerical values:
+
+```python
+from baseapp.utils import numerify
+
+>>> numerify("1")
+1
+>>> numerify("1a")
+-1
+>>> numerify("ab")
+-1
+>>> numerify("abc", default=44)
+44
+```
+
+### `vb_baseapp.utils.save_file`
+
+While using `FileField`, sometimes you need to handle uploaded files. In this
+case, you need to use `upload_to` attribute. Take a look at the example:
+
+```python
+from vb_baseapp.utils import save_file as custom_save_file
+:
+:
+:
+class User(AbstractBaseUser, PermissionsMixin):
+    :
+    :
+    avatar = models.FileField(
+        upload_to=save_user_avatar,
+        verbose_name=_('Profile Image'),
+        null=True,
+        blank=True,
+    )
+    :
+    :
+```
+
+`save_user_avatar` returns `custom_save_file`’s return value. Default
+configuration of for `custom_save_file` is 
+`save_file(instance, filename, upload_to='upload/%Y/%m/%d/')`. Uploads are go to
+such as `MEDIA_ROOT/upload/2017/09/21/`...
+
+Make your custom uploads like:
+
+```python
+from vb_baseapp.utils import save_file as custom_save_file
+
+def my_custom_uploader(instance, filename):
+    # do your stuff
+    # at the end, call:
+    return custom_save_file(instance, filename, upload_to='images/%Y/')
+
+
+class MyModel(models.Model):
+    image = models.FileField(
+        upload_to='my_custom_uploader',
+        verbose_name=_('Profile Image'),
+    )
+```
+
+### SlackExceptionHandler
+
+`vb_baseapp.utils.log.SlackExceptionHandler`
+
+You can send errors/exceptions to [slack](https://api.slack.com) channel.
+Just create a slack app, get the webhook URL and set as `SLACK_HOOK`
+environment variable. Due to slack message size limitation, `traceback`
+is disabled.
+
+Example message contains:
+
+- http status
+- error message
+- exception message
+- user.id or None
+- full path
+
+```bash
+http status: 500
+ERROR (internal IP): Internal Server Error: /__baseapp__/
+Exception: User matching query does not exist.
+user_id: anonymous (None)
+full path: /__baseapp__/?foo=!
+```
+
+You can enable/disable in `config/settings/production.py` / `config/settings/heroku.py`:
+
+```python
+:
+:
+    'loggers': {
+        'django.request': {'handlers': ['mail_admins', 'slack'], 'level': 'ERROR', 'propagate': False},  # remove 'slack'
+    }
+:
+:
+```
+
+### `vb_baseapp.storage`
+
+#### `FileNotFoundFileSystemStorage`
+
+After shipping/deploying Django app, users start to upload files, right ?
+Then you need to implement new features etc. You can get the dump of the
+database but what about uploaded files ? Sometimes files are too much or
+too big. If you call, let’s say, a model’s `ImageField`’s `url` property,
+local dev server logs lot’s of **file not found** errors to console.
+
+Also breaks the look of application via broken image signs in browser.
+
+Now, you won’t see any errors... `FileNotFoundFileSystemStorage` is a
+fake storage that handles non existing files. Returns `file-not-found.jpg`
+from `static/images/` folder.
+
+This is **development purposes** only! Do not use in the production!
+
+You don’t need to change/add anything to your code... It’s embeded to
+`config/settings/development.py`:
+
+```python
+:
+:
+DEFAULT_FILE_STORAGE = 'vb_baseapp.storage.FileNotFoundFileSystemStorage'
+:
+```
+
+You can disable if you like to...
+
+#### `OverwriteStorage`
+
+`OverwriteStorage` helps you to overwrite file when uploading from django
+admin. Example usage:
+
+```python
+# in a model
+from vb_baseapp.utils.storage image OverwriteStorage
+
+class MyModel(models.Model):
+    :
+    :
+    photo = models.ImageField(
+        upload_to=save_media_photo,
+        storage=OverwriteStorage(),
+    )
+    :
+    :
+```
+
+Add `storage` option in your file related fields.
+
+#### `AdminImageFileWidget`
+
+Use this widget in your admin forms. By default, It’s already enabled in
+`CustomBaseModelAdmin`. You can also inject this to Django’s default `ModelAdmin`
+via example:
+
+```python
+from vb_baseapp.widgets import AdminImageFileWidget
+
+class MyAdmin(admin.ModelAdmin):
+    formfield_overrides = {
+        models.FileField: {'widget': AdminImageFileWidget},
+    }
+```
+
+This widget uses `Pillow` (*Python Image Library*) which ships with your `base.pip`
+requirements file. Show image preview, width x height if the file is image.
+
+#### `context_processors.py`
+
+By default, `vb_baseapp` injects few variables to you context:
+
+- `DJANGO_ENV`
+- `IS_DEBUG`
+- `LANGUAGE_CODE`
+- `CURRENT_GIT_TAG`
+- `CURRENT_PYTHON_VERSION`
+- `CURRENT_DJANGO_VERSION`
 
 ---
 
@@ -1092,193 +1296,6 @@ Now make migrations etc... Use it as `from YOUR_APP.models import Page` :)
 
 ---
 
-## Goodies
-
-We have some mini helpers and tools shipped with `vb_baseapp`.
-
-### `vb_baseapp.utils.numerify`
-
-Little helper for catching **QUERY_STRING** parameters for numerical values:
-
-```python
-from baseapp.utils import numerify
-
->>> numerify("1")
-1
->>> numerify("1a")
--1
->>> numerify("ab")
--1
->>> numerify("abc", default=44)
-44
-```
-
-### `vb_baseapp.utils.save_file`
-
-While using `FileField`, sometimes you need to handle uploaded files. In this
-case, you need to use `upload_to` attribute. Take a look at the example:
-
-```python
-from vb_baseapp.utils import save_file as custom_save_file
-:
-:
-:
-class User(AbstractBaseUser, PermissionsMixin):
-    :
-    :
-    avatar = models.FileField(
-        upload_to=save_user_avatar,
-        verbose_name=_('Profile Image'),
-        null=True,
-        blank=True,
-    )
-    :
-    :
-```
-
-`save_user_avatar` returns `custom_save_file`’s return value. Default
-configuration of for `custom_save_file` is 
-`save_file(instance, filename, upload_to='upload/%Y/%m/%d/')`. Uploads are go to
-such as `MEDIA_ROOT/upload/2017/09/21/`...
-
-Make your custom uploads like:
-
-```python
-from vb_baseapp.utils import save_file as custom_save_file
-
-def my_custom_uploader(instance, filename):
-    # do your stuff
-    # at the end, call:
-    return custom_save_file(instance, filename, upload_to='images/%Y/')
-
-
-class MyModel(models.Model):
-    image = models.FileField(
-        upload_to='my_custom_uploader',
-        verbose_name=_('Profile Image'),
-    )
-```
-
-### SlackExceptionHandler
-
-`vb_baseapp.utils.log.SlackExceptionHandler`
-
-You can send errors/exceptions to [slack](https://api.slack.com) channel.
-Just create a slack app, get the webhook URL and set as `SLACK_HOOK`
-environment variable. Due to slack message size limitation, `traceback`
-is disabled.
-
-Example message contains:
-
-- http status
-- error message
-- exception message
-- user.id or None
-- full path
-
-```bash
-http status: 500
-ERROR (internal IP): Internal Server Error: /__baseapp__/
-Exception: User matching query does not exist.
-user_id: anonymous (None)
-full path: /__baseapp__/?foo=!
-```
-
-You can enable/disable in `config/settings/production.py` / `config/settings/heroku.py`:
-
-```python
-:
-:
-    'loggers': {
-        'django.request': {'handlers': ['mail_admins', 'slack'], 'level': 'ERROR', 'propagate': False},  # remove 'slack'
-    }
-:
-:
-```
-
-### `vb_baseapp.storage`
-
-#### `FileNotFoundFileSystemStorage`
-
-After shipping/deploying Django app, users start to upload files, right ?
-Then you need to implement new features etc. You can get the dump of the
-database but what about uploaded files ? Sometimes files are too much or
-too big. If you call, let’s say, a model’s `ImageField`’s `url` property,
-local dev server logs lot’s of **file not found** errors to console.
-
-Also breaks the look of application via broken image signs in browser.
-
-Now, you won’t see any errors... `FileNotFoundFileSystemStorage` is a
-fake storage that handles non existing files. Returns `file-not-found.jpg`
-from `static/images/` folder.
-
-This is **development purposes** only! Do not use in the production!
-
-You don’t need to change/add anything to your code... It’s embeded to
-`config/settings/development.py`:
-
-```python
-:
-:
-DEFAULT_FILE_STORAGE = 'vb_baseapp.storage.FileNotFoundFileSystemStorage'
-:
-```
-
-You can disable if you like to...
-
-#### `OverwriteStorage`
-
-`OverwriteStorage` helps you to overwrite file when uploading from django
-admin. Example usage:
-
-```python
-# in a model
-from vb_baseapp.utils.storage image OverwriteStorage
-
-class MyModel(models.Model):
-    :
-    :
-    photo = models.ImageField(
-        upload_to=save_media_photo,
-        storage=OverwriteStorage(),
-    )
-    :
-    :
-```
-
-Add `storage` option in your file related fields.
-
-#### `AdminImageFileWidget`
-
-Use this widget in your admin forms. By default, It’s already enabled in
-`CustomBaseModelAdmin`. You can also inject this to Django’s default `ModelAdmin`
-via example:
-
-```python
-from vb_baseapp.widgets import AdminImageFileWidget
-
-class MyAdmin(admin.ModelAdmin):
-    formfield_overrides = {
-        models.FileField: {'widget': AdminImageFileWidget},
-    }
-```
-
-This widget uses `Pillow` (*Python Image Library*) which ships with your `base.pip`
-requirements file. Show image preview, width x height if the file is image.
-
-#### `context_processors.py`
-
-By default, `vb_baseapp` injects few variables to you context:
-
-- `DJANGO_ENV`
-- `IS_DEBUG`
-- `LANGUAGE_CODE`
-- `CURRENT_GIT_TAG`
-- `CURRENT_PYTHON_VERSION`
-- `CURRENT_DJANGO_VERSION`
-
----
-
 ## License
 
 This project is licensed under MIT
@@ -1304,6 +1321,10 @@ All PR’s are welcome!
 ---
 
 ## Change Log
+
+**2019-11-30**
+
+- Update and fix typos in README file
 
 **2019-11-28**
 

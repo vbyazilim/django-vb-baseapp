@@ -4,8 +4,7 @@ from django.contrib import admin
 from django.core.cache import cache
 from django.core.paginator import Paginator
 from django.db import models
-# from django.forms import TextInput
-# from django.shortcuts import redirect
+from django.forms import models as form_models
 from django.template.defaultfilters import capfirst
 from django.utils.translation import ngettext_lazy
 from django.utils.translation import ugettext_lazy as _
@@ -15,6 +14,9 @@ from console import console
 from ..models import CustomBaseModelWithSoftDelete
 from ..widgets import AdminImageFileWidget
 from .actions import hard_delete_selected, recover_selected
+from .autocomplete_view import (
+    SoftDeleteAutocompleteJsonView,
+)
 
 __all__ = ['CustomBaseModelAdmin', 'CustomBaseModelAdminWithSoftDelete']
 
@@ -102,6 +104,20 @@ MESSAGE_HARDDELETED_OBJECTS_REPORT = ngettext_lazy(
 )
 
 
+class SoftDeleteModelChoiceIterator(form_models.ModelChoiceIterator):
+    def choice(self, obj):
+        label = self.field.label_from_instance(obj)
+        if obj.is_deleted:
+            label = f'[{capfirst(_("deleted"))}]: {label}'
+        return (self.field.prepare_value(obj), label)
+
+
+def set_model_choice_iterator(formfield):
+    if issubclass(formfield.queryset.model, CustomBaseModelWithSoftDelete):
+        return SoftDeleteModelChoiceIterator
+    return formfield.iterator
+
+
 class CustomBaseModelAdminWithSoftDelete(CustomBaseModelAdmin):
 
     hide_deleted_at = True
@@ -135,7 +151,7 @@ class CustomBaseModelAdminWithSoftDelete(CustomBaseModelAdmin):
 
     def get_queryset(self, request):
         queryset = super().get_queryset(request)
-        if request.GET:
+        if request.GET or request.is_ajax():
             return queryset
         return queryset.actives()
 
@@ -156,6 +172,9 @@ class CustomBaseModelAdminWithSoftDelete(CustomBaseModelAdmin):
             extra_context['show_recover'] = True
 
         return super().change_view(request, object_id, form_url, extra_context=extra_context)
+
+    def autocomplete_view(self, request):
+        return SoftDeleteAutocompleteJsonView.as_view(model_admin=self)(request)
 
     def get_exclude(self, request, obj=None):
         is_obj_deleted = getattr(obj, 'is_deleted', False)
@@ -201,30 +220,14 @@ class CustomBaseModelAdminWithSoftDelete(CustomBaseModelAdmin):
         )
         return existing_actions
 
-    def fix_formfield_choices_for_foreignkey_and_manytomany(self, queryset, empty_label):  # pylint: disable=R0201
-        if empty_label is not None:
-            yield '', empty_label
-        for item in queryset:
-            choice_id = item.id
-            choice_label = str(item)
-            if item.is_deleted:
-                choice_label = f'[{capfirst(_("deleted"))}]: {choice_label}'
-            yield choice_id, choice_label
-
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         formfield = super().formfield_for_foreignkey(db_field, request, **kwargs)
-        if issubclass(formfield.queryset.model, CustomBaseModelWithSoftDelete):
-            formfield.choices = self.fix_formfield_choices_for_foreignkey_and_manytomany(
-                formfield.queryset, formfield.empty_label
-            )
+        formfield.iterator = set_model_choice_iterator(formfield)
         return formfield
 
     def formfield_for_manytomany(self, db_field, request, **kwargs):
         formfield = super().formfield_for_manytomany(db_field, request, **kwargs)
-        if issubclass(formfield.queryset.model, CustomBaseModelWithSoftDelete):
-            formfield.choices = self.fix_formfield_choices_for_foreignkey_and_manytomany(
-                formfield.queryset, formfield.empty_label
-            )
+        formfield.iterator = set_model_choice_iterator(formfield)
         return formfield
 
     def has_delete_permission(self, request, obj=None):
