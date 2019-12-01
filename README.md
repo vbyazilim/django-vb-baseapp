@@ -988,7 +988,7 @@ Use this widget in your admin forms. By default, It’s already enabled in
 via example:
 
 ```python
-from vb_baseapp.widgets import AdminImageFileWidget
+from vb_baseapp.admin.widgets import AdminImageFileWidget
 
 class MyAdmin(admin.ModelAdmin):
     formfield_overrides = {

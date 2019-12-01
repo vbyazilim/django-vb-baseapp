@@ -12,11 +12,11 @@ from django.utils.translation import ugettext_lazy as _
 from console import console
 
 from ..models import CustomBaseModelWithSoftDelete
-from ..widgets import AdminImageFileWidget
 from .actions import hard_delete_selected, recover_selected
 from .autocomplete_view import (
     SoftDeleteAutocompleteJsonView,
 )
+from .widgets import AdminImageFileWidget
 
 __all__ = ['CustomBaseModelAdmin', 'CustomBaseModelAdminWithSoftDelete']
 
@@ -223,6 +223,9 @@ class CustomBaseModelAdminWithSoftDelete(CustomBaseModelAdmin):
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         formfield = super().formfield_for_foreignkey(db_field, request, **kwargs)
         formfield.iterator = set_model_choice_iterator(formfield)
+        if db_field.name in self.get_autocomplete_fields(request):
+            pass
+            # kwargs['widget'] = AutocompleteSelect(db_field.remote_field, self.admin_site, using=db)
         return formfield
 
     def formfield_for_manytomany(self, db_field, request, **kwargs):
