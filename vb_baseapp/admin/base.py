@@ -1,11 +1,19 @@
 import logging
 
 from django.contrib import admin
+from django.contrib.admin import widgets
+from django.contrib.admin.widgets import (
+    AutocompleteSelectMultiple,
+)
 from django.core.cache import cache
 from django.core.paginator import Paginator
 from django.db import models
 from django.forms import models as form_models
-from django.template.defaultfilters import capfirst
+from django.forms.widgets import (
+    CheckboxSelectMultiple,
+    SelectMultiple,
+)
+from django.utils.text import capfirst, format_lazy
 from django.utils.translation import ngettext_lazy
 from django.utils.translation import ugettext_lazy as _
 
@@ -16,7 +24,12 @@ from .actions import hard_delete_selected, recover_selected
 from .autocomplete_view import (
     SoftDeleteAutocompleteJsonView,
 )
-from .widgets import AdminImageFileWidget
+from .utils import set_label_prefix_for_related_fields
+from .widgets import (
+    AdminAutocompleteSelect,
+    AdminAutocompleteSelectMultiple,
+    AdminImageFileWidget,
+)
 
 __all__ = ['CustomBaseModelAdmin', 'CustomBaseModelAdminWithSoftDelete']
 
@@ -106,10 +119,7 @@ MESSAGE_HARDDELETED_OBJECTS_REPORT = ngettext_lazy(
 
 class SoftDeleteModelChoiceIterator(form_models.ModelChoiceIterator):
     def choice(self, obj):
-        label = self.field.label_from_instance(obj)
-        if obj.is_deleted:
-            label = f'[{capfirst(_("deleted"))}]: {label}'
-        return (self.field.prepare_value(obj), label)
+        return (self.field.prepare_value(obj), set_label_prefix_for_related_fields(self.field, obj))
 
 
 def set_model_choice_iterator(formfield):
@@ -221,15 +231,56 @@ class CustomBaseModelAdminWithSoftDelete(CustomBaseModelAdmin):
         return existing_actions
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        db = kwargs.get('using')  # pylint: disable=C0103
+
+        if db_field.name in self.get_autocomplete_fields(request):
+            kwargs['widget'] = AdminAutocompleteSelect(db_field.remote_field, self.admin_site, using=db)
+
         formfield = super().formfield_for_foreignkey(db_field, request, **kwargs)
         formfield.iterator = set_model_choice_iterator(formfield)
-        if db_field.name in self.get_autocomplete_fields(request):
-            pass
-            # kwargs['widget'] = AutocompleteSelect(db_field.remote_field, self.admin_site, using=db)
         return formfield
 
+    def formfield_for_manytomany_modified(self, db_field, request, **kwargs):
+        """
+        Get a form Field for a ManyToManyField.
+        """
+        # If it uses an intermediary model that isn't auto created, don't show
+        # a field in admin.
+        if not db_field.remote_field.through._meta.auto_created:  # pylint: disable=W0212
+            return None
+        db = kwargs.get('using')  # pylint: disable=C0103
+
+        autocomplete_fields = self.get_autocomplete_fields(request)
+        # just added this line...
+        if 'widget' not in kwargs:
+            if db_field.name in autocomplete_fields:
+                kwargs['widget'] = AutocompleteSelectMultiple(db_field.remote_field, self.admin_site, using=db)
+            elif db_field.name in self.raw_id_fields:
+                kwargs['widget'] = widgets.ManyToManyRawIdWidget(db_field.remote_field, self.admin_site, using=db)
+            elif db_field.name in [*self.filter_vertical, *self.filter_horizontal]:
+                kwargs['widget'] = widgets.FilteredSelectMultiple(
+                    db_field.verbose_name, db_field.name in self.filter_vertical
+                )
+
+        if 'queryset' not in kwargs:
+            queryset = self.get_field_queryset(db, db_field, request)
+            if queryset is not None:
+                kwargs['queryset'] = queryset
+
+        form_field = db_field.formfield(**kwargs)
+        if isinstance(form_field.widget, SelectMultiple) and not isinstance(
+            form_field.widget, (CheckboxSelectMultiple, AutocompleteSelectMultiple)
+        ):
+            msg = _('Hold down "Control", or "Command" on a Mac, to select more than one.')
+            help_text = form_field.help_text
+            form_field.help_text = format_lazy('{0} {1}', help_text, msg) if help_text else msg
+        return form_field
+
     def formfield_for_manytomany(self, db_field, request, **kwargs):
-        formfield = super().formfield_for_manytomany(db_field, request, **kwargs)
+        db = kwargs.get('using')  # pylint: disable=C0103
+        if db_field.name in self.get_autocomplete_fields(request):
+            kwargs['widget'] = AdminAutocompleteSelectMultiple(db_field.remote_field, self.admin_site, using=db)
+        formfield = self.formfield_for_manytomany_modified(db_field, request, **kwargs)
         formfield.iterator = set_model_choice_iterator(formfield)
         return formfield
 

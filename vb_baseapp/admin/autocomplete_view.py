@@ -4,7 +4,7 @@ from django.contrib.admin.views.autocomplete import (
     AutocompleteJsonView,
 )
 from django.http import Http404, JsonResponse
-from django.template.defaultfilters import capfirst
+from django.utils.text import capfirst
 from django.utils.translation import ugettext_lazy as _
 
 from console import console
