@@ -1,9 +1,16 @@
-# pylint: disable=W0223
+# pylint: disable=W0223,R0201
+
+import errno
+import os
 import re
+import time
 
-from django.core.management.base import BaseCommand
+from django.core.management.base import (
+    BaseCommand,
+    CommandError,
+)
 
-__all__ = ['CustomBaseCommand', 'get_need_model_names']
+__all__ = ['CustomBaseCommand', 'CustomBaseCommandWithFileTools', 'get_need_model_names']
 
 
 def get_need_model_names(name):
@@ -71,3 +78,33 @@ class CustomBaseCommand(BaseCommand):
         switcher = {'s': 'SUCCESS', 'w': 'WARNING', 'e': 'ERROR', 'n': 'NOTICE'}.get(style, 's')
         writer = getattr(self.style, switcher)
         self.stdout.write(writer(text))
+
+
+class CustomBaseCommandWithFileTools(CustomBaseCommand):
+    def create_or_modify_file(self, filename, content, mode='w'):
+        with open(filename, mode) as file_pointer:
+            file_pointer.write(content)
+
+    def make_directory(self, dirname):
+        try:
+            os.mkdir(dirname)
+        except OSError as err:
+            if err.errno == errno.EEXIST:
+                message = '"%s" already exists' % dirname
+            else:
+                message = err
+            exception_obj = CommandError(message)
+            exception_obj.errno = err.errno
+            raise exception_obj
+
+    def create_file_with_content(self, filename, content):
+        """
+        Create/write a file with content.
+        """
+        with open(filename, 'w') as file_pointer:
+            file_pointer.write(content)
+
+    def touch(self, filename):
+        am_time = time.mktime(time.localtime())
+        with open(filename, 'a'):
+            os.utime(filename, (am_time, am_time))

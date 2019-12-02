@@ -1,8 +1,6 @@
 # pylint: disable=R0914,R0201
 
-import errno
 import os
-import time
 import re
 from importlib import import_module
 
@@ -10,7 +8,7 @@ from django.conf import settings
 from django.core.management.base import CommandError
 from django.utils.text import capfirst
 
-from ..base import CustomBaseCommand
+from ..base import CustomBaseCommandWithFileTools
 from ..template_structures import application as application_templates
 
 TEMPLATE_MODELS_INIT = """# isort:skip_file
@@ -97,7 +95,7 @@ USER_REMINDER = """
 """
 
 
-class Command(CustomBaseCommand):
+class Command(CustomBaseCommandWithFileTools):
     help = (  # noqa: A003
         'Creates a custom Django app directory structure for the given app name in ' '`applications/` directory.'
     )
@@ -159,27 +157,3 @@ class Command(CustomBaseCommand):
             if single_file.get('render', False):
                 rendered_content = single_file.get('render').format(**render_params)
                 self.create_file_with_content(file_path, rendered_content)
-
-    def make_directory(self, dirname):
-        try:
-            os.mkdir(dirname)
-        except OSError as err:
-            if err.errno == errno.EEXIST:
-                message = '"%s" already exists' % dirname
-            else:
-                message = err
-            raise CommandError(message)
-
-    def create_file_with_content(self, filename, content):
-        """
-
-        Create/write a file with content.
-
-        """
-        with open(filename, 'w') as file_pointer:
-            file_pointer.write(content)
-
-    def touch(self, filename):
-        am_time = time.mktime(time.localtime())
-        with open(filename, 'a'):
-            os.utime(filename, (am_time, am_time))

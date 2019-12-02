@@ -4,7 +4,7 @@
 Custom User Model template
 """
 
-TEMPLATE_CUSTOM_USER_MODEL_MANAGER = """class {model_name_for_class}Manager(BaseUserManager):
+TEMPLATE_CUSTOM_USER_MODEL_MANAGER = """class {model_name_for_class}Manager(BaseUserManager{softdelete_manager_name}):
     use_in_migrations = True
 
     def create_user(self, email, first_name, last_name, middle_name=None, password=None):
@@ -54,7 +54,8 @@ from django.contrib.auth.models import (
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
-from console import console{selected_model_class_name_for_import}
+from console import console
+{selected_model_class_name_for_import}{softdelete_manager_import}
 from vb_baseapp.utils import save_file as custom_save_file
 
 __all__ = ['{model_name_for_class}']
@@ -65,8 +66,8 @@ console = console(source=__name__)
 
 {model_manager}
 
-def save_user_avatar(instance, filename):
-    return custom_save_file(instance, filename, upload_to='avatar/')
+def save_user_profile_image(instance, filename):
+    return custom_save_file(instance, filename, upload_to='profile_images/')
 
 
 {class_header}
@@ -78,7 +79,9 @@ def save_user_avatar(instance, filename):
     first_name = models.CharField(max_length=255, verbose_name=_('first name'))
     middle_name = models.CharField(max_length=255, null=True, blank=True, verbose_name=_('middle name'))
     last_name = models.CharField(max_length=255, verbose_name=_('last name'))
-    avatar = models.FileField(upload_to=save_user_avatar, verbose_name=_('profile image'), null=True, blank=True)
+    profile_image = models.FileField(
+        upload_to=save_user_profile_image, verbose_name=_('profile image'), null=True, blank=True
+    )
     is_active = models.BooleanField(default=True, verbose_name=_('active'))
     is_staff = models.BooleanField(default=False, verbose_name=_('staff status'))
 
@@ -103,3 +106,11 @@ def save_user_avatar(instance, filename):
         return full_name.strip()
 
 """
+
+__all__ = [
+    'TEMPLATE_CUSTOM_USER_MODEL_MANAGER',
+    'TEMPLATE_CUSTOM_USER_MODEL_DJANGO_CLASS_HEADER',
+    'TEMPLATE_CUSTOM_USER_MODEL_CUSTOM_CLASS_HEADER',
+    'TEMPLATE_CUSTOM_USER_MODEL_DJANGO_CREATED_AT',
+    'TEMPLATE_CUSTOM_USER_MODEL',
+]

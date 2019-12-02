@@ -7,7 +7,10 @@ from django.apps import apps
 from django.conf import settings
 from django.core.management.base import CommandError
 
-from ..base import CustomBaseCommand, get_need_model_names
+from ..base import (
+    CustomBaseCommandWithFileTools,
+    get_need_model_names,
+)
 from ..template_structures import admins as admin_templates
 from ..template_structures import models as model_templates
 
@@ -35,14 +38,10 @@ USER_REMINDER = """
 """
 
 
-class Command(CustomBaseCommand):
+class Command(CustomBaseCommandWithFileTools):
     help = 'Creates models/MODEL.py, admin/MODEL.py for given application'  # noqa: A003
 
     MODEL_TYPE_CHOISES = ['django', 'basemodel', 'softdelete']
-
-    def create_or_modify_file(self, filename, content, mode='w'):
-        with open(filename, mode) as file_pointer:
-            file_pointer.write(content)
 
     def add_arguments(self, parser):
         parser.add_argument('app_name', nargs=1, type=str, help='Name of your application')
