@@ -78,7 +78,6 @@ class CustomBaseModelWithSoftDelete(CustomBaseModel):
             required_post_signal = post_undelete
             required_deleted_at = None
         with transaction.atomic(using=using, savepoint=False):
-
             # pre signal...
             for model, obj in items.get('instances_with_model'):
                 if not model._meta.auto_created:
@@ -94,7 +93,11 @@ class CustomBaseModelWithSoftDelete(CustomBaseModel):
                     # CustomBaseModelWithSoftDelete
                     count = queryset.update(deleted_at=required_deleted_at)
                 else:
+                    # now checking related objects.
+                    # if one of the fields is a CustomBaseModelWithSoftDelete instance
+                    # we'll skip deleletion
                     skip_raw_delete = False
+
                     for field in queryset.model._meta.fields:
                         if (
                             hasattr(field, 'related_model')
@@ -105,6 +108,12 @@ class CustomBaseModelWithSoftDelete(CustomBaseModel):
                         ):
                             skip_raw_delete = True
                             break
+
+                    if hasattr(self, 'is_deleted'):
+                        # if the main instance is a subclass of CustomBaseModelWithSoftDelete
+                        # again, keep the related items for recovery...
+                        skip_raw_delete = True
+
                     if not skip_raw_delete:
                         count = queryset._raw_delete(using=using)
 
