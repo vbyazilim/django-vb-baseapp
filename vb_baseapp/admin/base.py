@@ -231,13 +231,14 @@ class CustomBaseModelAdminWithSoftDelete(CustomBaseModelAdmin):
         return existing_actions
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
-        db = kwargs.get('using')  # pylint: disable=C0103
-
-        if db_field.name in self.get_autocomplete_fields(request):
+        related_field_is_subclass_of_softdelete = issubclass(db_field.related_model, CustomBaseModelWithSoftDelete)
+        if db_field.name in self.get_autocomplete_fields(request) and related_field_is_subclass_of_softdelete:
+            db = kwargs.get('using')  # pylint: disable=C0103
             kwargs['widget'] = AdminAutocompleteSelect(db_field.remote_field, self.admin_site, using=db)
 
         formfield = super().formfield_for_foreignkey(db_field, request, **kwargs)
-        formfield.iterator = set_model_choice_iterator(formfield)
+        if related_field_is_subclass_of_softdelete:
+            formfield.iterator = set_model_choice_iterator(formfield)
         return formfield
 
     def formfield_for_manytomany_modified(self, db_field, request, **kwargs):
@@ -277,11 +278,14 @@ class CustomBaseModelAdminWithSoftDelete(CustomBaseModelAdmin):
         return form_field
 
     def formfield_for_manytomany(self, db_field, request, **kwargs):
-        db = kwargs.get('using')  # pylint: disable=C0103
-        if db_field.name in self.get_autocomplete_fields(request):
+        related_field_is_subclass_of_softdelete = issubclass(db_field.related_model, CustomBaseModelWithSoftDelete)
+        if db_field.name in self.get_autocomplete_fields(request) and related_field_is_subclass_of_softdelete:
+            db = kwargs.get('using')  # pylint: disable=C0103
             kwargs['widget'] = AdminAutocompleteSelectMultiple(db_field.remote_field, self.admin_site, using=db)
+
         formfield = self.formfield_for_manytomany_modified(db_field, request, **kwargs)
-        formfield.iterator = set_model_choice_iterator(formfield)
+        if related_field_is_subclass_of_softdelete:
+            formfield.iterator = set_model_choice_iterator(formfield)
         return formfield
 
     def has_delete_permission(self, request, obj=None):
