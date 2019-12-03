@@ -100,8 +100,10 @@ class Command(CustomBaseCommandWithFileTools):
         )
         softdelete_manager_name = ''
         softdelete_manager_import = ''
+        comma_prefix = ''
         if model_type in ['basemodel', 'softdelete']:
             created_at_and_updated_at = ''
+            comma_prefix = ', '
             if model_type == 'basemodel':
                 selected_model_class_name = 'CustomBaseModel'
             else:
@@ -119,7 +121,8 @@ class Command(CustomBaseCommandWithFileTools):
             selected_model_class_name_for_import=selected_model_class_name_for_import,
             model_name_for_class=model_name_for_class,
             model_manager=custom_user_model_template.TEMPLATE_CUSTOM_USER_MODEL_MANAGER.format(
-                model_name_for_class=model_name_for_class, softdelete_manager_name=f', {softdelete_manager_name}'
+                model_name_for_class=model_name_for_class,
+                softdelete_manager_name=f'{comma_prefix}{softdelete_manager_name}',
             ),
             class_header=required_class_header,
             created_at_and_updated_at=created_at_and_updated_at,
@@ -195,10 +198,10 @@ class Command(CustomBaseCommandWithFileTools):
         self.out(f'admin/{os.path.basename(admin_file)} created.')
 
         self.create_or_modify_file(model_init_file, content_init_file, 'a')
-        self.out(f'{model_name} model added to models/__init__.py', 'n')
+        self.out(f'{model_name_for_class} model added to models/__init__.py', 'n')
 
         self.create_or_modify_file(admin_init_file, content_init_file, 'a')
-        self.out(f'{model_name} model added to admin/__init__.py', 'n')
+        self.out(f'{model_name_for_class} model added to admin/__init__.py', 'n')
 
         try:
             self.make_directory(admin_forms_folder)
@@ -207,7 +210,7 @@ class Command(CustomBaseCommandWithFileTools):
                 raise e
 
         self.create_or_modify_file(admin_forms_folder_init_file, content_init_file, 'a')
-        self.out(f'{model_name} forms added to admin/forms/__init__.py', 'n')
+        self.out(f'{model_name_for_class} forms added to admin/forms/__init__.py', 'n')
 
         admin_form_file = os.path.join(app_dir, 'admin', 'forms', f'{model_name_for_file}.py')
         self.create_or_modify_file(admin_form_file, content_admin_form_file)

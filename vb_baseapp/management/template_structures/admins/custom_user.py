@@ -20,6 +20,7 @@ from django.contrib.auth.admin import (
     UserAdmin as BaseUserAdmin,
 )
 from django.db import models
+from django.utils.html import format_html
 from django.utils.translation import ugettext_lazy as _
 
 from console import console
@@ -45,12 +46,15 @@ CUSTOM_USER = get_user_model()
     form = {model_name_for_class}ChangeForm
     add_form = {model_name_for_class}CreationForm
     autocomplete_fields = ['groups', 'user_permissions']
-    list_display = ('email', 'first_name', 'last_name')
+    list_display = ('email', 'first_name', 'last_name', 'show_profile_image')
     list_display_links = ('email',)
     search_fields = ('email', 'first_name', 'middle_name', 'last_name')
     ordering = ('email',)
     fieldsets = (
-        (_('user information'), {{'fields': ('email', 'password', 'first_name', 'middle_name', 'last_name', 'profile_image')}}),
+        (
+            _('user information'),
+            {{'fields': ('email', 'password', 'first_name', 'middle_name', 'last_name', 'profile_image')}},
+        ),
         (_('permissions'), {{'fields': ('is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions')}}),
     )
     add_fieldsets = (
@@ -58,6 +62,17 @@ CUSTOM_USER = get_user_model()
     )
     formfield_overrides = {{models.FileField: {{'widget': AdminImageFileWidget}}}}
 
+    def show_profile_image(self, obj):  # pylint: disable=R0201
+        if obj.profile_image:
+            return format_html(
+                '<img class="thumbnail" src="{{0}}" alt="{{1}}">', obj.profile_image.url, obj.get_full_name()
+            )
+        return None
+
+    show_profile_image.short_description = _('profile image')
+
+    class Media:
+        css = {{'all': ['admin/css/vb-baseapp-admin.css']}}
 """
 
 __all__ = [
