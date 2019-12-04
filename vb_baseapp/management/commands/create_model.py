@@ -5,7 +5,10 @@ from importlib import import_module
 
 from django.apps import apps
 from django.conf import settings
-from django.core.management.base import CommandError
+from django.core.management.base import (
+    CommandError,
+    no_translations,
+)
 
 from ..base import (
     CustomBaseCommandWithFileTools,
@@ -50,6 +53,7 @@ class Command(CustomBaseCommandWithFileTools):
             'model_type', nargs='?', default='django', choices=self.MODEL_TYPE_CHOISES, help='Type of your model'
         )
 
+    @no_translations
     def handle(self, *args, **options):
         app_name = options.pop('app_name')[0]
         model_name = options.pop('model_name')[0]

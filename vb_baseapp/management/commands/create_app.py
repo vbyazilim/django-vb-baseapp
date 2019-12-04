@@ -3,7 +3,7 @@
 import os
 import re
 from importlib import import_module
-
+from django.core.management.base import no_translations
 from django.conf import settings
 from django.core.management.base import CommandError
 from django.utils.text import capfirst
@@ -105,6 +105,7 @@ class Command(CustomBaseCommandWithFileTools):
     def add_arguments(self, parser):
         parser.add_argument('name', nargs=1, type=str, help='Name of your application')
 
+    @no_translations
     def handle(self, *args, **options):
         app_name = options.pop('name')[0]
         inital_caps_appname = ''.join(map(lambda t: t.title(), re.split('[^a-zA-Z0-9]', app_name)))

@@ -6,7 +6,10 @@ from importlib import import_module
 
 from django.apps import apps
 from django.conf import settings
-from django.core.management.base import CommandError
+from django.core.management.base import (
+    CommandError,
+    no_translations,
+)
 from django.db import DEFAULT_DB_ALIAS, connections
 from django.db.migrations.executor import MigrationExecutor
 
@@ -69,6 +72,7 @@ class Command(CustomBaseCommandWithFileTools):
             'model_type', nargs='?', default='django', choices=self.MODEL_TYPE_CHOISES, help='Type of your model'
         )
 
+    @no_translations
     def handle(self, *args, **options):
         if is_database_synchronized(DEFAULT_DB_ALIAS):
             raise CommandError('sorry, you are in the middle of the project, this command works only in fresh start')

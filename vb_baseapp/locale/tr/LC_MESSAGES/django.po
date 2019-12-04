@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: django-vb-baseapp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-11-26 08:49+0300\n"
+"POT-Creation-Date: 2019-12-04 13:51+0300\n"
 "PO-Revision-Date: 2019-11-26 08:49+0300\n"
 "Last-Translator: Uğur Özyılmazel <ugurozyilmazel@gmail.com>\n"
 "Language-Team: Turkish <ugurozyilmazel@gmail.com>\n"
@@ -48,47 +48,52 @@ msgstr "%(name)s silinemiyor"
 msgid "Are you sure?"
 msgstr "Emin misiniz?"
 
-#: admin/base.py:46
+#: admin/base.py:61
 msgid "activity state"
 msgstr "aktiflik durumu"
 
-#: admin/base.py:50
+#: admin/base.py:65
 msgid "inactives"
 msgstr "pasifler"
 
-#: admin/base.py:98
+#: admin/base.py:110
 #, python-format
 msgid "\"%(obj)s (ID: %(id)d)\" recovered successfully."
 msgstr "“%(obj)s (ID: %(id)d)” başarılı bir şekilde geri getirildi."
 
-#: admin/base.py:100
+#: admin/base.py:112
 #, python-format
 msgid "%(num)d object is recovered in total."
 msgid_plural "%(num)d objects are recovered in total."
 msgstr[0] "Toplamda %(num)d nesne geri getirildi."
 msgstr[1] "Toplamda %(num)d nesne geri getirildi."
 
-#: admin/base.py:102
+#: admin/base.py:114
 #, python-format
 msgid "\"%(obj)s\" is really deleted."
 msgstr "“%(obj)s” nesnesi gerçekten silindi."
 
-#: admin/base.py:104
+#: admin/base.py:116
 #, python-format
 msgid "%(num)d object is wiped in total."
 msgid_plural "%(num)d objects are wiped in total."
 msgstr[0] "Toplamda %(num)d nesne silindi."
 msgstr[1] "Toplamda %(num)d nesne silindi."
 
-#: admin/base.py:192
+#: admin/base.py:218
 #, python-format
 msgid "Recover selected %(verbose_name_plural)s"
 msgstr "Seçili silinmiş %(verbose_name_plural)s nesnelerini geri getir"
 
-#: admin/base.py:201
+#: admin/base.py:227
 #, python-format
 msgid "Hard delete selected %(verbose_name_plural)s"
 msgstr "Seçili %(verbose_name_plural)s nesnelerini gerçekten sil"
+
+#: admin/base.py:275
+msgid ""
+"Hold down \"Control\", or \"Command\" on a Mac, to select more than one."
+msgstr ""
 
 #: admin/filters/log_entry.py:21
 msgid "Add"
