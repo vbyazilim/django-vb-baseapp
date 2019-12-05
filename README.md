@@ -1,5 +1,6 @@
 [![Build Status](https://travis-ci.org/vbyazilim/django-vb-baseapp.svg?branch=master)](https://travis-ci.org/vbyazilim/django-vb-baseapp)
 ![Python](https://img.shields.io/badge/python-3.7.4-green.svg)
+![Python](https://img.shields.io/badge/python-3.8.0-green.svg)
 ![Django](https://img.shields.io/badge/django-2.2.6-green.svg)
 ![Version](https://img.shields.io/badge/version-1.1.0-orange.svg)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/4c6aa76f09fd437eb3888855fccc9604)](https://www.codacy.com/manual/vigo/django-vb-baseapp?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=vbyazilim/django-vb-baseapp&amp;utm_campaign=Badge_Grade)
@@ -147,7 +148,7 @@ Performing system checks...
 
 System check identified no issues (0 silenced).
 
-Django version 2.2.6, using settings 'config.settings.development'
+Django version X.X.X, using settings 'config.settings.development'
 Development server is running at http://[127.0.0.1]:8000/
 Using the Werkzeug debugger (http://werkzeug.pocoo.org/)
 Quit the server with CONTROL-C.
@@ -1171,29 +1172,31 @@ rake db:roll_back[name_of_application,name_of_migration]         # Roll-back (na
 rake db:shell                                                    # run database shell ..
 rake db:show[name_of_application]                                # Show migrations for an application (default: 'all')
 rake db:update[name_of_application,name_of_migration,is_empty]   # Update migration (name of application, name of migration?, is empty?)
-rake default                                                     # Default task: run_server+
+rake default                                                     # Default task: runserver_plus (Werkzeug)
 rake locale:compile                                              # Compile locale dictionary
 rake locale:update                                               # Update locale dictionary
 rake new:application[name_of_application]                        # Create new Django application
 rake new:model[name_of_application,name_of_model,type_of_model]  # Create new Model for given application: django,basemodel,softdelete
-rake runserver                                                   # Run server
-rake runserver_plus                                              # Run server+
+rake runserver:default                                           # Run: runserver (Django's default server)
+rake runserver:default_ipdb                                      # Run: runserver (Django's default server) + ipdb debug support
+rake runserver:plus                                              # Run: runserver_plus (Werkzeug)
+rake runserver:plus_ipdb                                         # Run: runserver_plus (Werkzeug) + ipdb debug support
 rake shell[repl]                                                 # Run shell+ avail: ptpython,ipython,bpython default: ptpython
 rake test:browse_coverage[port]                                  # Browse test coverage
 rake test:coverage[cli_args]                                     # Show test coverage (default: '--show-missing --ignore-errors --skip-covered')
 rake test:run[name_of_application,verbose]                       # Run tests for given application
 ```
 
-Default task is `run_server`. Just type `rake` that’s it! `runserver` uses
+Default task is `runserver:plus`. Just type `rake` that’s it! `runserver:plus` uses
 `runserver_plus`. This means you have lots of debugging options!
 
-### `rake` or `rake runserver_plus` or `rake default`
+### `runserver` based tasks
 
-Runs `DJANGO_COLORS='dark' python manage.py runserver_plus --nothreading`
-
-### `rake runserver`
-
-This is Django’s builtin server: `python manage.py runserver`
+- `rake runserver:default`: runs `python manage.py runserver`
+- `rake runserver:default_ipdb`: runs Django’s default server with debugging
+  feature. You can inject `breakpoint()` in your code! Debugger kicks in!
+- `rake runserver:plus`: runs `python manage.py runserver_plus --nothreading`
+- `rake runserver:plus_ipdb`: runs `runserver:plus` with debugging!
 
 ### `rake db:migrate[database]`
 
