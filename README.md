@@ -2,7 +2,7 @@
 ![Python](https://img.shields.io/badge/python-3.7.4-green.svg)
 ![Python](https://img.shields.io/badge/python-3.8.0-green.svg)
 ![Django](https://img.shields.io/badge/django-2.2.8-green.svg)
-![Version](https://img.shields.io/badge/version-1.1.1-orange.svg)
+![Version](https://img.shields.io/badge/version-1.1.2-orange.svg)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/4c6aa76f09fd437eb3888855fccc9604)](https://www.codacy.com/manual/vigo/django-vb-baseapp?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=vbyazilim/django-vb-baseapp&amp;utm_campaign=Badge_Grade)
 
 # django-vb-baseapp
