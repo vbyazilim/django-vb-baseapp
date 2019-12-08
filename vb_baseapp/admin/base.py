@@ -284,7 +284,7 @@ class CustomBaseModelAdminWithSoftDelete(CustomBaseModelAdmin):
             kwargs['widget'] = AdminAutocompleteSelectMultiple(db_field.remote_field, self.admin_site, using=db)
 
         formfield = self.formfield_for_manytomany_modified(db_field, request, **kwargs)
-        if related_field_is_subclass_of_softdelete:
+        if formfield and related_field_is_subclass_of_softdelete:
             formfield.iterator = set_model_choice_iterator(formfield)
         return formfield
 
