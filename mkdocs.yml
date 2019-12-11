@@ -1,0 +1,21 @@
+site_name: django-vb-baseapp
+site_description: This is a helper app for django-vb-admin and ships with while installation!
+site_author: Uğur vigo Özyılmazel
+theme:
+  name: 'material'
+repo_name: vbyazilim/django-vb-baseapp
+repo_url: https://github.com/vbyazilim/django-vb-baseapp
+markdown_extensions:
+  - codehilite
+nav:
+    - Home: "index.md"
+    - Tutorial: "tutorial.md"
+    - Models: "models.md"
+    - Models Admins: "models_admins.md"
+    - Middlewares: "middlewares.md"
+    - Custom Error Pages: "error_pages.md"
+    - Goodies: "goodies.md"
+    - Management Commands: "management_commands.md"
+    - Rake Tasks: "rake_tasks.md"
+    - Manual Usage: "manual_usage.md"
+

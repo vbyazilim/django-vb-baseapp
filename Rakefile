@@ -46,3 +46,21 @@ namespace :locale do
     }
   end
 end
+
+namespace :docs do
+  desc "Run docs server"
+  task :serve do
+    system "mkdocs serve -a 0.0.0.0:8000"
+  end
+  
+  desc "Build docs"
+  task :build do
+    system "mkdocs build --clean"
+  end
+
+  desc "Deploy to github"
+  task :deploy do
+    Rake::Task["docs:build"].invoke
+    system "mkdocs gh-deploy"
+  end
+end
