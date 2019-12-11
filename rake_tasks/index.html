@@ -1,0 +1,878 @@
+
+
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+        <meta name="description" content="This is a helper app for django-vb-admin and ships with while installation!">
+      
+      
+      
+        <meta name="author" content="Uğur vigo Özyılmazel">
+      
+      
+        <meta name="lang:clipboard.copy" content="Copy to clipboard">
+      
+        <meta name="lang:clipboard.copied" content="Copied to clipboard">
+      
+        <meta name="lang:search.language" content="en">
+      
+        <meta name="lang:search.pipeline.stopwords" content="True">
+      
+        <meta name="lang:search.pipeline.trimmer" content="True">
+      
+        <meta name="lang:search.result.none" content="No matching documents">
+      
+        <meta name="lang:search.result.one" content="1 matching document">
+      
+        <meta name="lang:search.result.other" content="# matching documents">
+      
+        <meta name="lang:search.tokenizer" content="[\s\-]+">
+      
+      <link rel="shortcut icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.5.1">
+    
+    
+      
+        <title>Rake Tasks - django-vb-baseapp</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/application.1b62728e.css">
+      
+      
+    
+    
+      <script src="../assets/javascripts/modernizr.268332fc.js"></script>
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
+      
+    
+    <link rel="stylesheet" href="../assets/fonts/material-icons.css">
+    
+    
+    
+      
+    
+    
+  </head>
+  
+    <body dir="ltr">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+          <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448" viewBox="0 0 416 448" id="__github"><path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19T128 352t-18.125-8.5-10.75-19T96 304t3.125-20.5 10.75-19T128 256t18.125 8.5 10.75 19T160 304zm160 0q0 10-3.125 20.5t-10.75 19T288 352t-18.125-8.5-10.75-19T256 304t3.125-20.5 10.75-19T288 256t18.125 8.5 10.75 19T320 304zm40 0q0-30-17.25-51T296 232q-10.25 0-48.75 5.25Q229.5 240 208 240t-39.25-2.75Q130.75 232 120 232q-29.5 0-46.75 21T56 304q0 22 8 38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0 37.25-1.75t35-7.375 30.5-15 20.25-25.75T360 304zm56-44q0 51.75-15.25 82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5T212 416q-19.5 0-35.5-.75t-36.875-3.125-38.125-7.5-34.25-12.875T37 371.5t-21.5-28.75Q0 312 0 260q0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25 30.875Q171.5 96 212 96q37 0 70 8 26.25-20.5 46.75-30.25T376 64q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34 99.5z"/></svg>
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+    
+      <a href="#runserver-based-tasks" tabindex="1" class="md-skip">
+        Skip to content
+      </a>
+    
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href=".." title="django-vb-baseapp" class="md-header-nav__button md-logo">
+          
+            <i class="md-icon"></i>
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          
+            <span class="md-header-nav__topic">
+              django-vb-baseapp
+            </span>
+            <span class="md-header-nav__topic">
+              
+                Rake Tasks
+              
+            </span>
+          
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+          
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            Type to start searching
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+        
+      </div>
+      
+        <div class="md-flex__cell md-flex__cell--shrink">
+          <div class="md-header-nav__source">
+            
+
+
+  
+
+<a href="https://github.com/vbyazilim/django-vb-baseapp/" title="Go to repository" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    vbyazilim/django-vb-baseapp
+  </div>
+</a>
+          </div>
+        </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+        
+      
+      
+      <main class="md-main" role="main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <a href=".." title="django-vb-baseapp" class="md-nav__button md-logo">
+      
+        <i class="md-icon"></i>
+      
+    </a>
+    django-vb-baseapp
+  </label>
+  
+    <div class="md-nav__source">
+      
+
+
+  
+
+<a href="https://github.com/vbyazilim/django-vb-baseapp/" title="Go to repository" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    vbyazilim/django-vb-baseapp
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href=".." title="Home" class="md-nav__link">
+      Home
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../tutorial/" title="Tutorial" class="md-nav__link">
+      Tutorial
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../models/" title="Models" class="md-nav__link">
+      Models
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../models_admins/" title="Models Admins" class="md-nav__link">
+      Models Admins
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../middlewares/" title="Middlewares" class="md-nav__link">
+      Middlewares
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../error_pages/" title="Custom Error Pages" class="md-nav__link">
+      Custom Error Pages
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../goodies/" title="Goodies" class="md-nav__link">
+      Goodies
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../management_commands/" title="Management Commands" class="md-nav__link">
+      Management Commands
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Rake Tasks
+      </label>
+    
+    <a href="./" title="Rake Tasks" class="md-nav__link md-nav__link--active">
+      Rake Tasks
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#runserver-based-tasks" class="md-nav__link">
+    runserver based tasks
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rake-dbmigratedatabase" class="md-nav__link">
+    rake db:migrate[database]
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rake-dbshowname_of_application" class="md-nav__link">
+    rake db:show[name_of_application]
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rake-dbroll_backname_of_applicationname_of_migration" class="md-nav__link">
+    rake db:roll_back[name_of_application,name_of_migration]
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rake-dbupdatename_of_applicationname_of_migrationis_empty" class="md-nav__link">
+    rake db:update[name_of_application,name_of_migration,is_empty]
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rake-dbshell" class="md-nav__link">
+    rake db:shell
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rake-newapplicationname_of_application" class="md-nav__link">
+    rake new:application[name_of_application]
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rake-newmodelname_of_applicationname_of_modeltype_of_model" class="md-nav__link">
+    rake new:model[name_of_application,name_of_model,type_of_model]
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rake-localecompile-and-rake-localeupdate" class="md-nav__link">
+    rake locale:compile and rake locale:update
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rake-shellrepl" class="md-nav__link">
+    rake shell[repl]
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rake-testrunname_of_applicationverbose" class="md-nav__link">
+    rake test:run[name_of_application,verbose]
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rake-testcoveragecli_args" class="md-nav__link">
+    rake test:coverage[cli_args]
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rake-testbrowse_coverageport" class="md-nav__link">
+    rake test:browse_coverage[port]
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#run-tests-manually" class="md-nav__link">
+    Run Tests Manually
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../manual_usage/" title="Manual Usage" class="md-nav__link">
+      Manual Usage
+    </a>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#runserver-based-tasks" class="md-nav__link">
+    runserver based tasks
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rake-dbmigratedatabase" class="md-nav__link">
+    rake db:migrate[database]
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rake-dbshowname_of_application" class="md-nav__link">
+    rake db:show[name_of_application]
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rake-dbroll_backname_of_applicationname_of_migration" class="md-nav__link">
+    rake db:roll_back[name_of_application,name_of_migration]
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rake-dbupdatename_of_applicationname_of_migrationis_empty" class="md-nav__link">
+    rake db:update[name_of_application,name_of_migration,is_empty]
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rake-dbshell" class="md-nav__link">
+    rake db:shell
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rake-newapplicationname_of_application" class="md-nav__link">
+    rake new:application[name_of_application]
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rake-newmodelname_of_applicationname_of_modeltype_of_model" class="md-nav__link">
+    rake new:model[name_of_application,name_of_model,type_of_model]
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rake-localecompile-and-rake-localeupdate" class="md-nav__link">
+    rake locale:compile and rake locale:update
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rake-shellrepl" class="md-nav__link">
+    rake shell[repl]
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rake-testrunname_of_applicationverbose" class="md-nav__link">
+    rake test:run[name_of_application,verbose]
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rake-testcoveragecli_args" class="md-nav__link">
+    rake test:coverage[cli_args]
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rake-testbrowse_coverageport" class="md-nav__link">
+    rake test:browse_coverage[port]
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#run-tests-manually" class="md-nav__link">
+    Run Tests Manually
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/vbyazilim/django-vb-baseapp/edit/master/docs/rake_tasks.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                
+                
+                  <h1>Rake Tasks</h1>
+                
+                <p>You have some handy rake tasks if you like to use <code>ruby</code> :)</p>
+<div class="codehilite"><pre><span></span>$ rake -T
+
+rake db:migrate<span class="o">[</span>database<span class="o">]</span>                                        <span class="c1"># Run migration for given database (default: &#39;default&#39;)</span>
+rake db:roll_back<span class="o">[</span>name_of_application,name_of_migration<span class="o">]</span>         <span class="c1"># Roll-back (name of application, name of migration)</span>
+rake db:shell                                                    <span class="c1"># run database shell ..</span>
+rake db:show<span class="o">[</span>name_of_application<span class="o">]</span>                                <span class="c1"># Show migrations for an application (default: &#39;all&#39;)</span>
+rake db:update<span class="o">[</span>name_of_application,name_of_migration,is_empty<span class="o">]</span>   <span class="c1"># Update migration (name of application, name of migration?, is empty?)</span>
+rake default                                                     <span class="c1"># Default task: runserver_plus (Werkzeug)</span>
+rake locale:compile                                              <span class="c1"># Compile locale dictionary</span>
+rake locale:update                                               <span class="c1"># Update locale dictionary</span>
+rake new:application<span class="o">[</span>name_of_application<span class="o">]</span>                        <span class="c1"># Create new Django application</span>
+rake new:model<span class="o">[</span>name_of_application,name_of_model,type_of_model<span class="o">]</span>  <span class="c1"># Create new Model for given application: django,basemodel,softdelete</span>
+rake runserver:default                                           <span class="c1"># Run: runserver (Django&#39;s default server)</span>
+rake runserver:default_ipdb                                      <span class="c1"># Run: runserver (Django&#39;s default server) + ipdb debug support</span>
+rake runserver:plus                                              <span class="c1"># Run: runserver_plus (Werkzeug)</span>
+rake runserver:plus_ipdb                                         <span class="c1"># Run: runserver_plus (Werkzeug) + ipdb debug support</span>
+rake shell<span class="o">[</span>repl<span class="o">]</span>                                                 <span class="c1"># Run shell+ avail: ptpython,ipython,bpython default: ptpython</span>
+rake test:browse_coverage<span class="o">[</span>port<span class="o">]</span>                                  <span class="c1"># Browse test coverage</span>
+rake test:coverage<span class="o">[</span>cli_args<span class="o">]</span>                                     <span class="c1"># Show test coverage (default: &#39;--show-missing --ignore-errors --skip-covered&#39;)</span>
+rake test:run<span class="o">[</span>name_of_application,verbose<span class="o">]</span>                       <span class="c1"># Run tests for given application</span>
+</pre></div>
+
+
+<p>Default task is <code>runserver:plus</code>. Just type <code>rake</code> that’s it! <code>runserver:plus</code> uses
+<code>runserver_plus</code>. This means you have lots of debugging options!</p>
+<h2 id="runserver-based-tasks"><code>runserver</code> based tasks</h2>
+<ul>
+<li><code>rake runserver:default</code>: runs <code>python manage.py runserver</code></li>
+<li><code>rake runserver:default_ipdb</code>: runs Django’s default server with debugging
+  feature. You can inject <code>breakpoint()</code> in your code! Debugger kicks in!</li>
+<li><code>rake runserver:plus</code>: runs <code>python manage.py runserver_plus --nothreading</code></li>
+<li><code>rake runserver:plus_ipdb</code>: runs <code>runserver:plus</code> with debugging!</li>
+</ul>
+<h2 id="rake-dbmigratedatabase"><code>rake db:migrate[database]</code></h2>
+<p>Migrates database with given database name. Default is <code>default</code>. If you like
+to work multiple databases:</p>
+<div class="codehilite"><pre><span></span><span class="c1"># example configuration</span>
+
+<span class="n">DATABASES</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;ENGINE&#39;</span><span class="p">:</span> <span class="s1">&#39;django.db.backends.sqlite3&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;NAME&#39;</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">BASE_DIR</span><span class="p">,</span> <span class="s1">&#39;db&#39;</span><span class="p">,</span> <span class="s1">&#39;development.sqlite3&#39;</span><span class="p">),</span>
+    <span class="p">},</span>
+    <span class="s1">&#39;my_database&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;ENGINE&#39;</span><span class="p">:</span> <span class="s1">&#39;django.db.backends.sqlite3&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;NAME&#39;</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">BASE_DIR</span><span class="p">,</span> <span class="s1">&#39;db&#39;</span><span class="p">,</span> <span class="s1">&#39;my_database.sqlite3&#39;</span><span class="p">),</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>You can just call <code>rake db:migrate</code> or specify different database like: 
+<code>rake db:migrate[my_database]</code> :)</p>
+<h2 id="rake-dbshowname_of_application"><code>rake db:show[name_of_application]</code></h2>
+<p>Show migration information:</p>
+<div class="codehilite"><pre><span></span>$ rake db:show<span class="o">[</span>blog<span class="o">]</span>
+blog
+ <span class="o">[</span>X<span class="o">]</span> 0001_create_post_category_and_tag
+ <span class="o">[</span> <span class="o">]</span> 0002_add_spot_field_to_post
+
+$ rake db:migrate
+Running migration <span class="k">for</span>: default database...
+Operations to perform:
+  Apply all migrations: admin, auth, blog, contenttypes, sessions
+Running migrations:
+  Applying blog.0002_add_spot_field_to_post... OK
+</pre></div>
+
+
+<h2 id="rake-dbroll_backname_of_applicationname_of_migration"><code>rake db:roll_back[name_of_application,name_of_migration]</code></h2>
+<p>Your database must be rollable :) To see available migrations: 
+<code>rake db:roll_back[NAME_OF_YOUR_APPLICATION]</code>. Look at the list and choose your
+target migration. You can use just the number as shortcut. In this example,
+we’ll roll back to migration number 1, which has a name: <code>0001_create_post_category_and_tag</code></p>
+<div class="codehilite"><pre><span></span>$ rake db:roll_back<span class="o">[</span>blog<span class="o">]</span>
+Please <span class="k">select</span> your migration:
+blog
+ <span class="o">[</span>X<span class="o">]</span> 0001_create_post_category_and_tag
+ <span class="o">[</span>X<span class="o">]</span> 0002_add_spot_field_to_post
+
+$ rake db:roll_back<span class="o">[</span>blog,1<span class="o">]</span>
+Operations to perform:
+  Target specific migration: 0001_create_post_category_and_tag, from blog
+Running migrations:
+  Rendering model states... DONE
+  Unapplying blog.0002_add_spot_field_to_post... OK
+
+$ rake db:show<span class="o">[</span>blog<span class="o">]</span>
+blog
+ <span class="o">[</span>X<span class="o">]</span> 0001_create_post_category_and_tag
+ <span class="o">[</span> <span class="o">]</span> 0002_add_spot_field_to_post
+</pre></div>
+
+
+<h2 id="rake-dbupdatename_of_applicationname_of_migrationis_empty"><code>rake db:update[name_of_application,name_of_migration,is_empty]</code></h2>
+<p>When you add/change something in your model, you need to create migrations.
+Let’s say you have added new field to <code>Post</code> model in your <code>blog</code> app:</p>
+<p>If you don’t provide <code>name_of_migration</code> param, you’ll endup with auto
+generated name such as <code>000X_auto_YYYMMDD_HHMM</code>. You can also create
+empty migration via 3^rd parameter: <code>yes</code></p>
+<div class="codehilite"><pre><span></span>$ rake db:update<span class="o">[</span>blog,add_spot_field_to_post<span class="o">]</span>
+Migrations <span class="k">for</span> <span class="s1">&#39;blog&#39;</span>:
+  applications/blog/migrations/0002_add_spot_field_to_post.py
+    - Add field spot to post
+
+$ rake db:update<span class="o">[</span>blog,add_new_field_to_post,yes<span class="o">]</span>  <span class="c1"># empty migration example</span>
+Migrations <span class="k">for</span> <span class="s1">&#39;blog&#39;</span>:
+  applications/blog/migrations/0003_add_new_field_to_post.py
+
+$ cat applications/blog/migrations/0003_add_new_field_to_post.py
+</pre></div>
+
+
+<p>empty migration output:</p>
+<div class="codehilite"><pre><span></span><span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">migrations</span>
+
+
+<span class="k">class</span> <span class="nc">Migration</span><span class="p">(</span><span class="n">migrations</span><span class="o">.</span><span class="n">Migration</span><span class="p">):</span>
+
+    <span class="n">dependencies</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">(</span><span class="s1">&#39;blog&#39;</span><span class="p">,</span> <span class="s1">&#39;0002_add_spot_field_to_post&#39;</span><span class="p">),</span>
+    <span class="p">]</span>
+
+    <span class="n">operations</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">]</span>
+</pre></div>
+
+
+<h2 id="rake-dbshell"><code>rake db:shell</code></h2>
+<p>Runs default database client.</p>
+<h2 id="rake-newapplicationname_of_application"><code>rake new:application[name_of_application]</code></h2>
+<p>Creates new application with given application name!</p>
+<div class="codehilite"><pre><span></span>$ rake new:application<span class="o">[</span>blog<span class="o">]</span>
+</pre></div>
+
+
+<h2 id="rake-newmodelname_of_applicationname_of_modeltype_of_model"><code>rake new:model[name_of_application,name_of_model,type_of_model]</code></h2>
+<p>Creates new model! Available model types are:</p>
+<ul>
+<li><code>django</code> (default),</li>
+<li><code>basemodel</code></li>
+<li><code>softdelete</code></li>
+</ul>
+<div class="codehilite"><pre><span></span>$ rake new:model<span class="o">[</span>blog,Post<span class="o">]</span>                <span class="c1"># will create model using Django’s `models.Model`</span>
+$ rake new:model<span class="o">[</span>blog,Post,basemodel<span class="o">]</span>      <span class="c1"># will create model using our `CustomBaseModel`</span>
+$ rake new:model<span class="o">[</span>blog,Post,softdelete<span class="o">]</span>     <span class="c1"># will create model using our `CustomBaseModelWithSoftDelete`</span>
+</pre></div>
+
+
+<h2 id="rake-localecompile-and-rake-localeupdate"><code>rake locale:compile</code> and <code>rake locale:update</code></h2>
+<p>When you make changes in your application related to locales, run: <code>rake locale:update</code>.
+When you finish editing your <code>django.po</code> file, run <code>rake locale:compile</code>.</p>
+<h2 id="rake-shellrepl"><code>rake shell[repl]</code></h2>
+<p>Runs Django repl/shell with use <code>shell_plus</code> of [django-extensions][01].
+ <code>rake shell</code>. This loads everything to your shell! Also you can see the
+SQL statements while playing in shell. We have couple different repls:</p>
+<ol>
+<li><code>ptpython</code></li>
+<li><code>bpython</code></li>
+<li><code>ipython</code></li>
+</ol>
+<p>Default repl is: <code>ptpython</code></p>
+<div class="codehilite"><pre><span></span>$ rake shell
+$ rake shell<span class="o">[</span>bpython<span class="o">]</span>
+$ rake shell<span class="o">[</span>ipython<span class="o">]</span>
+</pre></div>
+
+
+<h2 id="rake-testrunname_of_applicationverbose"><code>rake test:run[name_of_application,verbose]</code></h2>
+<p>If you don’t provide <code>name_of_application</code> default value will be <code>applications</code>. 
+<code>verbose</code> is <code>1</code> by default.</p>
+<p>Examples:</p>
+<div class="codehilite"><pre><span></span>$ rake test:run
+$ rake test:run<span class="o">[</span>vb_baseapp,2<span class="o">]</span>
+</pre></div>
+
+
+<h2 id="rake-testcoveragecli_args"><code>rake test:coverage[cli_args]</code></h2>
+<p>Get the test report. Default is <code>--show-missing --ignore-errors --skip-covered</code> for
+<code>cli_args</code> parameter.</p>
+<div class="codehilite"><pre><span></span>$ rake test:coverage
+</pre></div>
+
+
+<h2 id="rake-testbrowse_coverageport"><code>rake test:browse_coverage[port]</code></h2>
+<p>Serves generated html coverages under <code>htmlcov</code> folder via <code>python</code>. Default port
+is <code>9001</code></p>
+<hr />
+<h3 id="run-tests-manually">Run Tests Manually</h3>
+<div class="codehilite"><pre><span></span>$ <span class="nv">DJANGO_ENV</span><span class="o">=</span><span class="nb">test</span> python manage.py <span class="nb">test</span> vb_baseapp -v <span class="m">2</span>                                 <span class="c1"># or</span>
+$ <span class="nv">DJANGO_ENV</span><span class="o">=</span><span class="nb">test</span> python manage.py <span class="nb">test</span> vb_baseapp.tests.test_user.CustomUserTestCase   <span class="c1"># run single unit</span>
+$ rake test:run<span class="o">[</span>vb_baseapp<span class="o">]</span>
+</pre></div>
+                
+                  
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+          <a href="../management_commands/" title="Management Commands" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+            </div>
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Management Commands
+              </span>
+            </div>
+          </a>
+        
+        
+          <a href="../manual_usage/" title="Manual Usage" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Manual Usage
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        powered by
+        <a href="https://www.mkdocs.org">MkDocs</a>
+        and
+        <a href="https://squidfunk.github.io/mkdocs-material/">
+          Material for MkDocs</a>
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../assets/javascripts/application.8e03edeb.js"></script>
+      
+      <script>app.initialize({version:"1.0.4",url:{base:".."}})</script>
+      
+    
+  </body>
+</html>

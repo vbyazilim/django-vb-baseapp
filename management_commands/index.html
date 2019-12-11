@@ -1,0 +1,630 @@
+
+
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+        <meta name="description" content="This is a helper app for django-vb-admin and ships with while installation!">
+      
+      
+      
+        <meta name="author" content="Uğur vigo Özyılmazel">
+      
+      
+        <meta name="lang:clipboard.copy" content="Copy to clipboard">
+      
+        <meta name="lang:clipboard.copied" content="Copied to clipboard">
+      
+        <meta name="lang:search.language" content="en">
+      
+        <meta name="lang:search.pipeline.stopwords" content="True">
+      
+        <meta name="lang:search.pipeline.trimmer" content="True">
+      
+        <meta name="lang:search.result.none" content="No matching documents">
+      
+        <meta name="lang:search.result.one" content="1 matching document">
+      
+        <meta name="lang:search.result.other" content="# matching documents">
+      
+        <meta name="lang:search.tokenizer" content="[\s\-]+">
+      
+      <link rel="shortcut icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.5.1">
+    
+    
+      
+        <title>Management Commands - django-vb-baseapp</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/application.1b62728e.css">
+      
+      
+    
+    
+      <script src="../assets/javascripts/modernizr.268332fc.js"></script>
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
+      
+    
+    <link rel="stylesheet" href="../assets/fonts/material-icons.css">
+    
+    
+    
+      
+    
+    
+  </head>
+  
+    <body dir="ltr">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+          <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448" viewBox="0 0 416 448" id="__github"><path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19T128 352t-18.125-8.5-10.75-19T96 304t3.125-20.5 10.75-19T128 256t18.125 8.5 10.75 19T160 304zm160 0q0 10-3.125 20.5t-10.75 19T288 352t-18.125-8.5-10.75-19T256 304t3.125-20.5 10.75-19T288 256t18.125 8.5 10.75 19T320 304zm40 0q0-30-17.25-51T296 232q-10.25 0-48.75 5.25Q229.5 240 208 240t-39.25-2.75Q130.75 232 120 232q-29.5 0-46.75 21T56 304q0 22 8 38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0 37.25-1.75t35-7.375 30.5-15 20.25-25.75T360 304zm56-44q0 51.75-15.25 82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5T212 416q-19.5 0-35.5-.75t-36.875-3.125-38.125-7.5-34.25-12.875T37 371.5t-21.5-28.75Q0 312 0 260q0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25 30.875Q171.5 96 212 96q37 0 70 8 26.25-20.5 46.75-30.25T376 64q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34 99.5z"/></svg>
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+    
+      <a href="#create_app" tabindex="1" class="md-skip">
+        Skip to content
+      </a>
+    
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href=".." title="django-vb-baseapp" class="md-header-nav__button md-logo">
+          
+            <i class="md-icon"></i>
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          
+            <span class="md-header-nav__topic">
+              django-vb-baseapp
+            </span>
+            <span class="md-header-nav__topic">
+              
+                Management Commands
+              
+            </span>
+          
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+          
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            Type to start searching
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+        
+      </div>
+      
+        <div class="md-flex__cell md-flex__cell--shrink">
+          <div class="md-header-nav__source">
+            
+
+
+  
+
+<a href="https://github.com/vbyazilim/django-vb-baseapp/" title="Go to repository" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    vbyazilim/django-vb-baseapp
+  </div>
+</a>
+          </div>
+        </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+        
+      
+      
+      <main class="md-main" role="main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <a href=".." title="django-vb-baseapp" class="md-nav__button md-logo">
+      
+        <i class="md-icon"></i>
+      
+    </a>
+    django-vb-baseapp
+  </label>
+  
+    <div class="md-nav__source">
+      
+
+
+  
+
+<a href="https://github.com/vbyazilim/django-vb-baseapp/" title="Go to repository" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    vbyazilim/django-vb-baseapp
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href=".." title="Home" class="md-nav__link">
+      Home
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../tutorial/" title="Tutorial" class="md-nav__link">
+      Tutorial
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../models/" title="Models" class="md-nav__link">
+      Models
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../models_admins/" title="Models Admins" class="md-nav__link">
+      Models Admins
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../middlewares/" title="Middlewares" class="md-nav__link">
+      Middlewares
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../error_pages/" title="Custom Error Pages" class="md-nav__link">
+      Custom Error Pages
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../goodies/" title="Goodies" class="md-nav__link">
+      Goodies
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Management Commands
+      </label>
+    
+    <a href="./" title="Management Commands" class="md-nav__link md-nav__link--active">
+      Management Commands
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#create_app" class="md-nav__link">
+    create_app
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#create_model" class="md-nav__link">
+    create_model
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#create_custom_user_model" class="md-nav__link">
+    create_custom_user_model
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../rake_tasks/" title="Rake Tasks" class="md-nav__link">
+      Rake Tasks
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../manual_usage/" title="Manual Usage" class="md-nav__link">
+      Manual Usage
+    </a>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#create_app" class="md-nav__link">
+    create_app
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#create_model" class="md-nav__link">
+    create_model
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#create_custom_user_model" class="md-nav__link">
+    create_custom_user_model
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/vbyazilim/django-vb-baseapp/edit/master/docs/management_commands.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                
+                
+                  <h1>Management Commands</h1>
+                
+                <p><code>vb_baseapp</code> ships with three managements commands;</p>
+<h2 id="create_app"><code>create_app</code></h2>
+<div class="codehilite"><pre><span></span>$ python manage.py create_app NAME_OF_APP
+</pre></div>
+
+
+<p>Creates new Django application under <code>applications/</code> and provides application
+folder structure:</p>
+<div class="codehilite"><pre><span></span><span class="n">applications</span><span class="o">/</span><span class="n">NAME_OF_APP</span><span class="o">/</span>
+<span class="err">├──</span> <span class="k">admin</span>
+<span class="err">├──</span> <span class="n">management</span>
+<span class="err">├──</span> <span class="n">migrations</span>
+<span class="err">├──</span> <span class="n">models</span>
+<span class="err">├──</span> <span class="n">tests</span>
+<span class="err">├──</span> <span class="n">views</span>
+<span class="err">├──</span> <span class="n">__init__</span><span class="p">.</span><span class="n">py</span>
+<span class="err">├──</span> <span class="n">apps</span><span class="p">.</span><span class="n">py</span>
+<span class="err">└──</span> <span class="n">urls</span><span class="p">.</span><span class="n">py</span>
+</pre></div>
+
+
+<h2 id="create_model"><code>create_model</code></h2>
+<div class="codehilite"><pre><span></span>$ python manage.py create_model NAME_OF_APP NAME_OF_MODEL STYLE_OF_MODEL
+</pre></div>
+
+
+<p>Creates Django model. You have three different model style;</p>
+<ol>
+<li><code>django</code>: Uses Django’s <code>models.Model</code></li>
+<li><code>basemodel</code>: Uses <code>CustomBaseModel</code> (which inherits from <code>models.Model</code>)</li>
+<li><code>softdelete</code>: Uses <code>CustomBaseModelWithSoftDelete</code></li>
+</ol>
+<p>According to your model choice, related files will be generated.</p>
+<h2 id="create_custom_user_model"><code>create_custom_user_model</code></h2>
+<div class="codehilite"><pre><span></span>$ python manage.py create_custom_user_model NAME_OF_APP NAME_OF_MODEL STYLE_OF_MODEL 
+</pre></div>
+
+
+<p>This command will work only in the beginning state of development. Creating
+a custom user model is prohibited in the middle of the development. You
+must decide before you create other models or run initial migrations for
+Django’s default.</p>
+<p>This command creates;</p>
+<ul>
+<li>Admin files</li>
+<li>Model manager files</li>
+<li>Model admin form files</li>
+<li>Model files</li>
+</ul>
+<p>for given argumens. Let’s say you’ll start a fresh project and want to use
+custom user model. First, you need to create an app:</p>
+<div class="codehilite"><pre><span></span>$ python manage.py create_app blog
+<span class="c1"># follow the instructions</span>
+$ python manage.py create_custom_user_model blog CustomUser softdelete
+
+Set AUTH_USER_MODEL in config file
+models/custom_user.py created.
+admin/custom_user.py created.
+CustomUser model added to models/__init__.py
+CustomUser model added to admin/__init__.py
+CustomUser forms added to admin/forms/__init__.py
+admin/forms/custom_user.py created.
+
+Custom user installation completed. Now please check your<span class="p">;</span>
+
+    - blog/models/custom_user.py
+    - blog/admin/custom_user.py
+    - blog/admin/forms/custom_user.py
+
+Also<span class="p">;</span>
+
+    - <span class="sb">`</span>email<span class="sb">`</span> field is <span class="nb">set</span> to <span class="sb">`</span>USERNAME_FIELD<span class="sb">`</span>
+    - <span class="sb">`</span>first_name<span class="sb">`</span> and <span class="sb">`</span>last_name<span class="sb">`</span> are <span class="nb">set</span> as <span class="sb">`</span>REQUIRED_FIELDS<span class="sb">`</span>
+    - <span class="sb">`</span>middle_name<span class="sb">`</span>, <span class="sb">`</span>profile_image<span class="sb">`</span> are optionals
+
+Make sure <span class="k">if</span> all ok? Make your changes before running migrations:
+
+    $ python manage.py makemigrations --name create_custom_users
+</pre></div>
+
+
+<p>We’ve created <code>CustomUser</code> model from softdeletable object. Default fields
+are:</p>
+<ul>
+<li><code>email</code>: <code>EmailField</code></li>
+<li><code>first_name</code>: <code>CharField</code></li>
+<li><code>middle_name</code>: (optional) <code>CharField</code></li>
+<li><code>last_name</code>: <code>CharField</code></li>
+<li><code>profile_image</code>: (optional) <code>FileField</code></li>
+<li><code>is_active</code>: (optional) <code>BooleanField</code></li>
+<li><code>is_staff</code>: (optional) <code>BooleanField</code></li>
+</ul>
+<p>and other fields inherited from <code>AbstractBaseUser</code>:</p>
+<ul>
+<li><code>password</code></li>
+<li><code>last_login</code></li>
+</ul>
+<p>and other properties from <code>PermissionsMixin</code>. You can add/change or remove
+fields before creating migrations. Do not forget to check these files for
+<code>CustomUser</code> for the sake of this example:</p>
+<ul>
+<li><code>admin/custom_user.py</code></li>
+<li><code>admin/forms/custom_user.py</code></li>
+<li><code>models/custom_user.py</code></li>
+</ul>
+<p>Also, this management commands sets <code>AUTH_USER_MODEL</code> value in <code>config/base.py</code>.
+You’ll see;</p>
+<div class="codehilite"><pre><span></span><span class="n">AUTH_USER_MODEL</span> <span class="o">=</span> <span class="s1">&#39;blog.CustomUser&#39;</span>
+</pre></div>
+
+
+<p>since you’ve named the custom model as <code>CustomUser</code>.</p>
+                
+                  
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+          <a href="../goodies/" title="Goodies" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+            </div>
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Goodies
+              </span>
+            </div>
+          </a>
+        
+        
+          <a href="../rake_tasks/" title="Rake Tasks" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Rake Tasks
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        powered by
+        <a href="https://www.mkdocs.org">MkDocs</a>
+        and
+        <a href="https://squidfunk.github.io/mkdocs-material/">
+          Material for MkDocs</a>
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../assets/javascripts/application.8e03edeb.js"></script>
+      
+      <script>app.initialize({version:"1.0.4",url:{base:".."}})</script>
+      
+    
+  </body>
+</html>

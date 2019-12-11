@@ -1,0 +1,697 @@
+
+
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+        <meta name="description" content="This is a helper app for django-vb-admin and ships with while installation!">
+      
+      
+      
+        <meta name="author" content="Uğur vigo Özyılmazel">
+      
+      
+        <meta name="lang:clipboard.copy" content="Copy to clipboard">
+      
+        <meta name="lang:clipboard.copied" content="Copied to clipboard">
+      
+        <meta name="lang:search.language" content="en">
+      
+        <meta name="lang:search.pipeline.stopwords" content="True">
+      
+        <meta name="lang:search.pipeline.trimmer" content="True">
+      
+        <meta name="lang:search.result.none" content="No matching documents">
+      
+        <meta name="lang:search.result.one" content="1 matching document">
+      
+        <meta name="lang:search.result.other" content="# matching documents">
+      
+        <meta name="lang:search.tokenizer" content="[\s\-]+">
+      
+      <link rel="shortcut icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.5.1">
+    
+    
+      
+        <title>Models - django-vb-baseapp</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/application.1b62728e.css">
+      
+      
+    
+    
+      <script src="../assets/javascripts/modernizr.268332fc.js"></script>
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
+      
+    
+    <link rel="stylesheet" href="../assets/fonts/material-icons.css">
+    
+    
+    
+      
+    
+    
+  </head>
+  
+    <body dir="ltr">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+          <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448" viewBox="0 0 416 448" id="__github"><path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19T128 352t-18.125-8.5-10.75-19T96 304t3.125-20.5 10.75-19T128 256t18.125 8.5 10.75 19T160 304zm160 0q0 10-3.125 20.5t-10.75 19T288 352t-18.125-8.5-10.75-19T256 304t3.125-20.5 10.75-19T288 256t18.125 8.5 10.75 19T320 304zm40 0q0-30-17.25-51T296 232q-10.25 0-48.75 5.25Q229.5 240 208 240t-39.25-2.75Q130.75 232 120 232q-29.5 0-46.75 21T56 304q0 22 8 38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0 37.25-1.75t35-7.375 30.5-15 20.25-25.75T360 304zm56-44q0 51.75-15.25 82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5T212 416q-19.5 0-35.5-.75t-36.875-3.125-38.125-7.5-34.25-12.875T37 371.5t-21.5-28.75Q0 312 0 260q0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25 30.875Q171.5 96 212 96q37 0 70 8 26.25-20.5 46.75-30.25T376 64q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34 99.5z"/></svg>
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+    
+      <a href="#custombasemodel" tabindex="1" class="md-skip">
+        Skip to content
+      </a>
+    
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href=".." title="django-vb-baseapp" class="md-header-nav__button md-logo">
+          
+            <i class="md-icon"></i>
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          
+            <span class="md-header-nav__topic">
+              django-vb-baseapp
+            </span>
+            <span class="md-header-nav__topic">
+              
+                Models
+              
+            </span>
+          
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+          
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            Type to start searching
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+        
+      </div>
+      
+        <div class="md-flex__cell md-flex__cell--shrink">
+          <div class="md-header-nav__source">
+            
+
+
+  
+
+<a href="https://github.com/vbyazilim/django-vb-baseapp/" title="Go to repository" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    vbyazilim/django-vb-baseapp
+  </div>
+</a>
+          </div>
+        </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+        
+      
+      
+      <main class="md-main" role="main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <a href=".." title="django-vb-baseapp" class="md-nav__button md-logo">
+      
+        <i class="md-icon"></i>
+      
+    </a>
+    django-vb-baseapp
+  </label>
+  
+    <div class="md-nav__source">
+      
+
+
+  
+
+<a href="https://github.com/vbyazilim/django-vb-baseapp/" title="Go to repository" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    vbyazilim/django-vb-baseapp
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href=".." title="Home" class="md-nav__link">
+      Home
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../tutorial/" title="Tutorial" class="md-nav__link">
+      Tutorial
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Models
+      </label>
+    
+    <a href="./" title="Models" class="md-nav__link md-nav__link--active">
+      Models
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#custombasemodel" class="md-nav__link">
+    CustomBaseModel
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#custombasemodelwithsoftdelete" class="md-nav__link">
+    CustomBaseModelWithSoftDelete
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#how-soft-delete-works" class="md-nav__link">
+    How soft-delete works?
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    Examples
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../models_admins/" title="Models Admins" class="md-nav__link">
+      Models Admins
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../middlewares/" title="Middlewares" class="md-nav__link">
+      Middlewares
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../error_pages/" title="Custom Error Pages" class="md-nav__link">
+      Custom Error Pages
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../goodies/" title="Goodies" class="md-nav__link">
+      Goodies
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../management_commands/" title="Management Commands" class="md-nav__link">
+      Management Commands
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../rake_tasks/" title="Rake Tasks" class="md-nav__link">
+      Rake Tasks
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../manual_usage/" title="Manual Usage" class="md-nav__link">
+      Manual Usage
+    </a>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#custombasemodel" class="md-nav__link">
+    CustomBaseModel
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#custombasemodelwithsoftdelete" class="md-nav__link">
+    CustomBaseModelWithSoftDelete
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#how-soft-delete-works" class="md-nav__link">
+    How soft-delete works?
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    Examples
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/vbyazilim/django-vb-baseapp/edit/master/docs/models.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                
+                
+                  <h1>Models</h1>
+                
+                <h2 id="custombasemodel"><code>CustomBaseModel</code></h2>
+<p>This is a common model. By default, <code>CustomBaseModel</code> contains these fields:</p>
+<ul>
+<li><code>created_at</code></li>
+<li><code>updated_at</code></li>
+</ul>
+<p>Almost a default <code>models.Model</code> with two extra fields.</p>
+<h2 id="custombasemodelwithsoftdelete"><code>CustomBaseModelWithSoftDelete</code></h2>
+<p>This model inherits from <code>CustomBaseModel</code> and provides fake deletion which is
+probably called <strong>SOFT DELETE</strong>. This means, when you call model’s <code>delete()</code>
+method or QuerySet’s <code>delete()</code> method, it acts like delete action but never
+deletes the data.</p>
+<p>Just sets the <code>deleted_at</code> field to <strong>NOW</strong>.</p>
+<p>This works exactly like Django’s <code>delete()</code>. Broadcasts <code>pre_delete</code> and
+<code>post_delete</code> signals and returns the number of objects marked as deleted and
+a dictionary with the number of deletion-marks per object type.</p>
+<p>You can call <code>hard_delete()</code> method to delete an instance or a queryset
+actually.</p>
+<p>This model uses <code>CustomBaseModelWithSoftDeleteManager</code> as default manager.</p>
+<h3 id="how-soft-delete-works">How soft-delete works?</h3>
+<p>When you call <code>.delete()</code> method of a model instance or queryset, model manager
+sets <code>deleted_at</code> attribute to <strong>NOW</strong> all the way down through related
+<code>ForeignKey</code> and <code>ManyToMany</code> fields. This means, you still keep everything.</p>
+<p>Nothing is actually deleted, therefore your database constraints are still
+work fine. When you access deleted (<em>inactive</em>) object from admin site, you’ll
+see "deleted" text prefix in your related form fields if your related objects
+are <code>CustomBaseModelWithSoftDelete</code> instances.</p>
+<p>When you click <strong>recover</strong> button in the same page, all related and soft-deleted
+objects’ <code>deleted_at</code> value will set to <code>NULL</code> and available again.</p>
+<p>Please use <code>.actives()</code> queryset method instead of <code>.all()</code>. Why? <code>.all()</code>
+method is untouched and works as default. When <code>all()</code> called, returning
+queryset set contains everything event if the <code>deleted_at</code> is NULL or not...</p>
+<h2 id="examples">Examples</h2>
+<div class="codehilite"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="n">Post</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+
+<span class="n">SELECT</span> <span class="s2">&quot;blog_post&quot;</span><span class="o">.</span><span class="s2">&quot;id&quot;</span><span class="p">,</span>
+       <span class="s2">&quot;blog_post&quot;</span><span class="o">.</span><span class="s2">&quot;created_at&quot;</span><span class="p">,</span>
+       <span class="s2">&quot;blog_post&quot;</span><span class="o">.</span><span class="s2">&quot;updated_at&quot;</span><span class="p">,</span>
+       <span class="s2">&quot;blog_post&quot;</span><span class="o">.</span><span class="s2">&quot;deleted_at&quot;</span><span class="p">,</span>
+       <span class="s2">&quot;blog_post&quot;</span><span class="o">.</span><span class="s2">&quot;author_id&quot;</span><span class="p">,</span>
+       <span class="s2">&quot;blog_post&quot;</span><span class="o">.</span><span class="s2">&quot;category_id&quot;</span><span class="p">,</span>
+       <span class="s2">&quot;blog_post&quot;</span><span class="o">.</span><span class="s2">&quot;title&quot;</span><span class="p">,</span>
+       <span class="s2">&quot;blog_post&quot;</span><span class="o">.</span><span class="s2">&quot;body&quot;</span>
+  <span class="n">FROM</span> <span class="s2">&quot;blog_post&quot;</span>
+ <span class="n">LIMIT</span> <span class="mi">21</span>
+
+
+<span class="n">Execution</span> <span class="n">time</span><span class="p">:</span> <span class="mf">0.000950</span><span class="n">s</span> <span class="p">[</span><span class="n">Database</span><span class="p">:</span> <span class="n">default</span><span class="p">]</span>
+
+<span class="o">&lt;</span><span class="n">CustomBaseModelWithSoftDeleteQuerySet</span> <span class="p">[</span>
+    <span class="o">&lt;</span><span class="n">Post</span><span class="p">:</span> <span class="n">Python</span> <span class="n">post</span> <span class="mi">1</span><span class="o">&gt;</span><span class="p">,</span> 
+    <span class="o">&lt;</span><span class="n">Post</span><span class="p">:</span> <span class="n">Python</span> <span class="n">post</span> <span class="mi">2</span><span class="o">&gt;</span><span class="p">,</span> 
+    <span class="o">&lt;</span><span class="n">Post</span><span class="p">:</span> <span class="n">Python</span> <span class="n">post</span> <span class="mi">3</span><span class="o">&gt;</span><span class="p">,</span> 
+    <span class="o">&lt;</span><span class="n">Post</span><span class="p">:</span> <span class="n">Python</span> <span class="n">post</span> <span class="mi">4</span><span class="o">&gt;</span><span class="p">,</span>
+    <span class="p">:</span>
+    <span class="p">:</span>
+    <span class="p">:</span>
+    <span class="o">&lt;</span><span class="n">Post</span><span class="p">:</span> <span class="n">Golang</span> <span class="n">post</span> <span class="mi">4</span><span class="o">&gt;</span>
+<span class="p">]</span><span class="o">&gt;</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">Category</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+
+<span class="n">SELECT</span> <span class="s2">&quot;blog_category&quot;</span><span class="o">.</span><span class="s2">&quot;id&quot;</span><span class="p">,</span>
+       <span class="s2">&quot;blog_category&quot;</span><span class="o">.</span><span class="s2">&quot;created_at&quot;</span><span class="p">,</span>
+       <span class="s2">&quot;blog_category&quot;</span><span class="o">.</span><span class="s2">&quot;updated_at&quot;</span><span class="p">,</span>
+       <span class="s2">&quot;blog_category&quot;</span><span class="o">.</span><span class="s2">&quot;deleted_at&quot;</span><span class="p">,</span>
+       <span class="s2">&quot;blog_category&quot;</span><span class="o">.</span><span class="s2">&quot;title&quot;</span>
+  <span class="n">FROM</span> <span class="s2">&quot;blog_category&quot;</span>
+ <span class="n">LIMIT</span> <span class="mi">21</span>
+
+
+<span class="n">Execution</span> <span class="n">time</span><span class="p">:</span> <span class="mf">0.000643</span><span class="n">s</span> <span class="p">[</span><span class="n">Database</span><span class="p">:</span> <span class="n">default</span><span class="p">]</span>
+
+<span class="o">&lt;</span><span class="n">CustomBaseModelWithSoftDeleteQuerySet</span> <span class="p">[</span><span class="o">&lt;</span><span class="n">Category</span><span class="p">:</span> <span class="n">Python</span><span class="o">&gt;</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">Category</span><span class="p">:</span> <span class="n">Ruby</span><span class="o">&gt;</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">Category</span><span class="p">:</span> <span class="n">Bash</span><span class="o">&gt;</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">Category</span><span class="p">:</span> <span class="n">Golang</span><span class="o">&gt;</span><span class="p">]</span><span class="o">&gt;</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">Tag</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+
+<span class="n">SELECT</span> <span class="s2">&quot;blog_tag&quot;</span><span class="o">.</span><span class="s2">&quot;id&quot;</span><span class="p">,</span>
+       <span class="s2">&quot;blog_tag&quot;</span><span class="o">.</span><span class="s2">&quot;created_at&quot;</span><span class="p">,</span>
+       <span class="s2">&quot;blog_tag&quot;</span><span class="o">.</span><span class="s2">&quot;updated_at&quot;</span><span class="p">,</span>
+       <span class="s2">&quot;blog_tag&quot;</span><span class="o">.</span><span class="s2">&quot;deleted_at&quot;</span><span class="p">,</span>
+       <span class="s2">&quot;blog_tag&quot;</span><span class="o">.</span><span class="s2">&quot;name&quot;</span>
+  <span class="n">FROM</span> <span class="s2">&quot;blog_tag&quot;</span>
+ <span class="n">LIMIT</span> <span class="mi">21</span>
+
+
+<span class="n">Execution</span> <span class="n">time</span><span class="p">:</span> <span class="mf">0.000519</span><span class="n">s</span> <span class="p">[</span><span class="n">Database</span><span class="p">:</span> <span class="n">default</span><span class="p">]</span>
+
+<span class="o">&lt;</span><span class="n">CustomBaseModelWithSoftDeleteQuerySet</span> <span class="p">[</span><span class="o">&lt;</span><span class="n">Tag</span><span class="p">:</span> <span class="n">textmate</span><span class="o">&gt;</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">Tag</span><span class="p">:</span> <span class="n">pyc</span><span class="o">&gt;</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">Tag</span><span class="p">:</span> <span class="n">irb</span><span class="o">&gt;</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">Tag</span><span class="p">:</span> <span class="n">ipython</span><span class="o">&gt;</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">Tag</span><span class="p">:</span> <span class="n">lock</span><span class="o">&gt;</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">Tag</span><span class="p">:</span> <span class="n">environment</span><span class="o">&gt;</span><span class="p">]</span><span class="o">&gt;</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">Category</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Bash&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">delete</span><span class="p">()</span>
+<span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;blog.Post_tags&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s1">&#39;blog.Category&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;blog.Post&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">})</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">Category</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">delete</span><span class="p">()</span>
+<span class="p">(</span><span class="mi">11</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;blog.Post_tags&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s1">&#39;blog.Category&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;blog.Post&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">})</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">Category</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">inactives</span><span class="p">()</span>
+
+<span class="n">SELECT</span> <span class="s2">&quot;blog_category&quot;</span><span class="o">.</span><span class="s2">&quot;id&quot;</span><span class="p">,</span>
+       <span class="s2">&quot;blog_category&quot;</span><span class="o">.</span><span class="s2">&quot;created_at&quot;</span><span class="p">,</span>
+       <span class="s2">&quot;blog_category&quot;</span><span class="o">.</span><span class="s2">&quot;updated_at&quot;</span><span class="p">,</span>
+       <span class="s2">&quot;blog_category&quot;</span><span class="o">.</span><span class="s2">&quot;deleted_at&quot;</span><span class="p">,</span>
+       <span class="s2">&quot;blog_category&quot;</span><span class="o">.</span><span class="s2">&quot;title&quot;</span>
+  <span class="n">FROM</span> <span class="s2">&quot;blog_category&quot;</span>
+ <span class="n">WHERE</span> <span class="s2">&quot;blog_category&quot;</span><span class="o">.</span><span class="s2">&quot;deleted_at&quot;</span> <span class="n">IS</span> <span class="n">NOT</span> <span class="n">NULL</span>
+ <span class="n">LIMIT</span> <span class="mi">21</span>
+
+
+<span class="n">Execution</span> <span class="n">time</span><span class="p">:</span> <span class="mf">0.000337</span><span class="n">s</span> <span class="p">[</span><span class="n">Database</span><span class="p">:</span> <span class="n">default</span><span class="p">]</span>
+
+<span class="o">&lt;</span><span class="n">CustomBaseModelWithSoftDeleteQuerySet</span> <span class="p">[</span><span class="o">&lt;</span><span class="n">Category</span><span class="p">:</span> <span class="n">Bash</span><span class="o">&gt;</span><span class="p">]</span><span class="o">&gt;</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">Post</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">inactives</span><span class="p">()</span>
+
+<span class="n">SELECT</span> <span class="s2">&quot;blog_post&quot;</span><span class="o">.</span><span class="s2">&quot;id&quot;</span><span class="p">,</span>
+       <span class="s2">&quot;blog_post&quot;</span><span class="o">.</span><span class="s2">&quot;created_at&quot;</span><span class="p">,</span>
+       <span class="s2">&quot;blog_post&quot;</span><span class="o">.</span><span class="s2">&quot;updated_at&quot;</span><span class="p">,</span>
+       <span class="s2">&quot;blog_post&quot;</span><span class="o">.</span><span class="s2">&quot;deleted_at&quot;</span><span class="p">,</span>
+       <span class="s2">&quot;blog_post&quot;</span><span class="o">.</span><span class="s2">&quot;author_id&quot;</span><span class="p">,</span>
+       <span class="s2">&quot;blog_post&quot;</span><span class="o">.</span><span class="s2">&quot;category_id&quot;</span><span class="p">,</span>
+       <span class="s2">&quot;blog_post&quot;</span><span class="o">.</span><span class="s2">&quot;title&quot;</span><span class="p">,</span>
+       <span class="s2">&quot;blog_post&quot;</span><span class="o">.</span><span class="s2">&quot;body&quot;</span>
+  <span class="n">FROM</span> <span class="s2">&quot;blog_post&quot;</span>
+ <span class="n">WHERE</span> <span class="s2">&quot;blog_post&quot;</span><span class="o">.</span><span class="s2">&quot;deleted_at&quot;</span> <span class="n">IS</span> <span class="n">NOT</span> <span class="n">NULL</span>
+ <span class="n">LIMIT</span> <span class="mi">21</span>
+
+
+<span class="n">Execution</span> <span class="n">time</span><span class="p">:</span> <span class="mf">0.000387</span><span class="n">s</span> <span class="p">[</span><span class="n">Database</span><span class="p">:</span> <span class="n">default</span><span class="p">]</span>
+
+<span class="o">&lt;</span><span class="n">CustomBaseModelWithSoftDeleteQuerySet</span> <span class="p">[</span><span class="o">&lt;</span><span class="n">Post</span><span class="p">:</span> <span class="n">Bash</span> <span class="n">post</span> <span class="mi">1</span><span class="o">&gt;</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">Post</span><span class="p">:</span> <span class="n">Bash</span> <span class="n">post</span> <span class="mi">2</span><span class="o">&gt;</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">Post</span><span class="p">:</span> <span class="n">Bash</span> <span class="n">post</span> <span class="mi">3</span><span class="o">&gt;</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">Post</span><span class="p">:</span> <span class="n">Bash</span> <span class="n">post</span> <span class="mi">4</span><span class="o">&gt;</span><span class="p">]</span><span class="o">&gt;</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">Category</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">inactives</span><span class="p">()</span><span class="o">.</span><span class="n">undelete</span><span class="p">()</span>
+<span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;blog.Post_tags&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s1">&#39;blog.Category&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;blog.Post&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">})</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">Category</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">inactives</span><span class="p">()</span>
+<span class="o">&lt;</span><span class="n">CustomBaseModelWithSoftDeleteQuerySet</span> <span class="p">[]</span><span class="o">&gt;</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">Post</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">inactives</span><span class="p">()</span>
+<span class="o">&lt;</span><span class="n">CustomBaseModelWithSoftDeleteQuerySet</span> <span class="p">[]</span><span class="o">&gt;</span>
+</pre></div>
+
+
+<p><code>CustomBaseModelWithSoftDeleteQuerySet</code> has these query options:</p>
+<ul>
+<li><code>.actives()</code> : filters if <code>CustomBaseModelWithSoftDelete.deleted_at</code> is set to <code>NULL</code></li>
+<li><code>.inactives()</code> : filters if <code>CustomBaseModelWithSoftDelete.deleted_at</code> is not set to <code>NULL</code></li>
+<li><code>.delete()</code> : soft delete on given object/queryset.</li>
+<li><code>.undelete()</code> : recover soft deleted on given object/queryset.</li>
+<li><code>.hard_delete()</code> : this is real delete. this method erases given object/queryset and there is no turning back!.</li>
+</ul>
+<p>When soft-delete enabled (<em>during model creation</em>), Django admin will
+automatically use <code>CustomBaseModelAdminWithSoftDelete</code> which is inherited from:
+ <code>CustomBaseModelAdmin</code> &lt;- <code>admin.ModelAdmin</code>.</p>
+                
+                  
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+          <a href="../tutorial/" title="Tutorial" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+            </div>
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Tutorial
+              </span>
+            </div>
+          </a>
+        
+        
+          <a href="../models_admins/" title="Models Admins" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Models Admins
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        powered by
+        <a href="https://www.mkdocs.org">MkDocs</a>
+        and
+        <a href="https://squidfunk.github.io/mkdocs-material/">
+          Material for MkDocs</a>
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../assets/javascripts/application.8e03edeb.js"></script>
+      
+      <script>app.initialize({version:"1.0.4",url:{base:".."}})</script>
+      
+    
+  </body>
+</html>
