@@ -765,7 +765,7 @@ from <code>static/images/</code> folder.</p>
 <p><code>OverwriteStorage</code> helps you to overwrite file when uploading from django
 admin. Example usage:</p>
 <div class="codehilite"><pre><span></span><span class="c1"># in a model</span>
-<span class="kn">from</span> <span class="nn">vb_baseapp.utils.storage</span> <span class="n">image</span> <span class="n">OverwriteStorage</span>
+<span class="kn">from</span> <span class="nn">vb_baseapp.storage</span> <span class="kn">import</span> <span class="n">OverwriteStorage</span>
 
 <span class="k">class</span> <span class="nc">MyModel</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
     <span class="p">:</span>
