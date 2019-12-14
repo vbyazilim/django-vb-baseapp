@@ -22,7 +22,7 @@ class AdminImageFileWidget(AdminFileWidget):
     """
     Example usage in: `admin.py`
 
-        from baseapp.widgets import AdminImageFileWidget
+        from vb_baseapp.widgets import AdminImageFileWidget
         from django.db import models
 
         class MyModelAdmin(admin.ModelAdmin):
@@ -33,8 +33,9 @@ class AdminImageFileWidget(AdminFileWidget):
     """
 
     def render(self, name, value, attrs=None, renderer=None):
+        attrs.update(accept='image/*')
         widget = super().render(name, value, attrs)
-        if value:
+        if value and hasattr(value, 'path'):
             possible_image = is_image(value.path)
             if possible_image:
                 image_width = possible_image[0]

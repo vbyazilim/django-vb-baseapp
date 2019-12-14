@@ -24,7 +24,7 @@ class OverwriteStorage(FileSystemStorage):
 class FileNotFoundFileSystemStorage(FileSystemStorage):
     @property
     def file_not_found_image_path(self):
-        app_config = apps.get_app_config('baseapp')
+        app_config = apps.get_app_config('vb_baseapp')
         return os.path.join(app_config.path, 'static', FILE_NOT_FOUND_IMAGE)
 
     def _open(self, name, mode='rb'):

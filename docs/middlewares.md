@@ -5,7 +5,7 @@ This is mostly used for our custom projects. Injects `LANGUAGE_CODE` variable to
 
 ```python
 # add this to your settings/base.py
-MIDDLEWARE += ['baseapp.middlewares.CustomLocaleMiddleware']
+MIDDLEWARE += ['vb_baseapp.middlewares.CustomLocaleMiddleware']
 ```
 
 ## `TimezoneMiddleware`

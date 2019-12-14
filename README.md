@@ -723,7 +723,7 @@ This is mostly used for our custom projects. Injects `LANGUAGE_CODE` variable to
 
 ```python
 # add this to your settings/base.py
-MIDDLEWARE += ['baseapp.middlewares.CustomLocaleMiddleware']
+MIDDLEWARE += ['vb_baseapp.middlewares.CustomLocaleMiddleware']
 ```
 
 ### `TimezoneMiddleware`
@@ -844,7 +844,7 @@ More information is available [here][vb-console]
 Little helper for catching **QUERY_STRING** parameters for numerical values:
 
 ```python
-from baseapp.utils import numerify
+from vb_baseapp.utils import numerify
 
 >>> numerify("1")
 1
@@ -921,10 +921,10 @@ Example message contains:
 
 ```bash
 http status: 500
-ERROR (internal IP): Internal Server Error: /__baseapp__/
+ERROR (internal IP): Internal Server Error: /__vb_baseapp__/
 Exception: User matching query does not exist.
 user_id: anonymous (None)
-full path: /__baseapp__/?foo=!
+full path: /__vb_baseapp__/?foo=!
 ```
 
 You can enable/disable in `config/settings/production.py` / `config/settings/heroku.py`:

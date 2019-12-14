@@ -15,7 +15,7 @@ def save_file(instance, filename, upload_to='upload/%Y/%m/%d/'):
 
     You can customize this. In your `models.py`:
 
-        from baseapp.utils import save_file as custom_save_file
+        from vb_baseapp.utils import save_file as custom_save_file
 
         def my_custom_uploader(instance, filename):
 
