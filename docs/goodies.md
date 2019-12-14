@@ -229,7 +229,7 @@ admin. Example usage:
 
 ```python
 # in a model
-from vb_baseapp.utils.storage image OverwriteStorage
+from vb_baseapp.storage import OverwriteStorage
 
 class MyModel(models.Model):
     :
