@@ -450,7 +450,7 @@ to <code>False</code> for performance improvements.</p>
 <p><code>show_goback_button</code> is set to <code>True</code> by default. You can disable via;</p>
 <div class="codehilite"><pre><span></span><span class="k">class</span> <span class="nc">ExampleAdmin</span><span class="p">(</span><span class="n">CustomBaseModelAdminWithSoftDelete</span><span class="p">):</span>
     <span class="c1"># ...</span>
-    <span class="n">show_goback_button</span> <span class="o">=</span> <span class="bp">False</span>
+    <span class="n">show_goback_button</span> <span class="o">=</span> <span class="kc">False</span>
     <span class="c1"># ...</span>
 </pre></div>
 
@@ -478,7 +478,7 @@ that field while editing the instance.</li>
 <span class="n">console</span> <span class="o">=</span> <span class="n">console</span><span class="p">(</span><span class="n">source</span><span class="o">=</span><span class="vm">__name__</span><span class="p">)</span>
 
 
-<span class="nd">@admin.register</span><span class="p">(</span><span class="n">Post</span><span class="p">)</span>
+<span class="nd">@admin</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">Post</span><span class="p">)</span>
 <span class="k">class</span> <span class="nc">PostAdmin</span><span class="p">(</span><span class="n">CustomBaseModelAdminWithSoftDelete</span><span class="p">):</span>
     <span class="c1"># hide_deleted_at = False</span>
 </pre></div>

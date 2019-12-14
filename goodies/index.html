@@ -651,7 +651,7 @@ code, do not worry... console checks <code>DJANGO_ENV</code> environment variabl
 <p>More information is available <a href="https://github.com/vbyazilim/vb-console">here</a></p>
 <h2 id="vb_baseapputilsnumerify"><code>vb_baseapp.utils.numerify</code></h2>
 <p>Little helper for catching <strong>QUERY_STRING</strong> parameters for numerical values:</p>
-<div class="codehilite"><pre><span></span><span class="kn">from</span> <span class="nn">baseapp.utils</span> <span class="kn">import</span> <span class="n">numerify</span>
+<div class="codehilite"><pre><span></span><span class="kn">from</span> <span class="nn">vb_baseapp.utils</span> <span class="kn">import</span> <span class="n">numerify</span>
 
 <span class="o">&gt;&gt;&gt;</span> <span class="n">numerify</span><span class="p">(</span><span class="s2">&quot;1&quot;</span><span class="p">)</span>
 <span class="mi">1</span>
@@ -677,8 +677,8 @@ case, you need to use <code>upload_to</code> attribute. Take a look at the examp
     <span class="n">avatar</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">FileField</span><span class="p">(</span>
         <span class="n">upload_to</span><span class="o">=</span><span class="n">save_user_avatar</span><span class="p">,</span>
         <span class="n">verbose_name</span><span class="o">=</span><span class="n">_</span><span class="p">(</span><span class="s1">&#39;Profile Image&#39;</span><span class="p">),</span>
-        <span class="n">null</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
-        <span class="n">blank</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+        <span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="p">:</span>
     <span class="p">:</span>
@@ -721,10 +721,10 @@ is disabled.</p>
 <li>full path</li>
 </ul>
 <div class="codehilite"><pre><span></span>http status: <span class="m">500</span>
-ERROR <span class="o">(</span>internal IP<span class="o">)</span>: Internal Server Error: /__baseapp__/
+ERROR <span class="o">(</span>internal IP<span class="o">)</span>: Internal Server Error: /__vb_baseapp__/
 Exception: User matching query does not exist.
 user_id: anonymous <span class="o">(</span>None<span class="o">)</span>
-full path: /__baseapp__/?foo<span class="o">=</span>!
+full path: /__vb_baseapp__/?foo<span class="o">=</span>!
 </pre></div>
 
 
@@ -732,7 +732,7 @@ full path: /__baseapp__/?foo<span class="o">=</span>!
 <div class="codehilite"><pre><span></span><span class="p">:</span>
 <span class="p">:</span>
     <span class="s1">&#39;loggers&#39;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="s1">&#39;django.request&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;handlers&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;mail_admins&#39;</span><span class="p">,</span> <span class="s1">&#39;slack&#39;</span><span class="p">],</span> <span class="s1">&#39;level&#39;</span><span class="p">:</span> <span class="s1">&#39;ERROR&#39;</span><span class="p">,</span> <span class="s1">&#39;propagate&#39;</span><span class="p">:</span> <span class="bp">False</span><span class="p">},</span>  <span class="c1"># remove &#39;slack&#39;</span>
+        <span class="s1">&#39;django.request&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;handlers&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;mail_admins&#39;</span><span class="p">,</span> <span class="s1">&#39;slack&#39;</span><span class="p">],</span> <span class="s1">&#39;level&#39;</span><span class="p">:</span> <span class="s1">&#39;ERROR&#39;</span><span class="p">,</span> <span class="s1">&#39;propagate&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">},</span>  <span class="c1"># remove &#39;slack&#39;</span>
     <span class="p">}</span>
 <span class="p">:</span>
 <span class="p">:</span>
@@ -765,7 +765,7 @@ from <code>static/images/</code> folder.</p>
 <p><code>OverwriteStorage</code> helps you to overwrite file when uploading from django
 admin. Example usage:</p>
 <div class="codehilite"><pre><span></span><span class="c1"># in a model</span>
-<span class="kn">from</span> <span class="nn">vb_baseapp.utils.storage</span> <span class="nn">image</span> <span class="nn">OverwriteStorage</span>
+<span class="kn">from</span> <span class="nn">vb_baseapp.utils.storage</span> <span class="n">image</span> <span class="n">OverwriteStorage</span>
 
 <span class="k">class</span> <span class="nc">MyModel</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
     <span class="p">:</span>

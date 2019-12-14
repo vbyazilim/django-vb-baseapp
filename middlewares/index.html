@@ -430,7 +430,7 @@
 <p>This is mostly used for our custom projects. Injects <code>LANGUAGE_CODE</code> variable to
 <code>request</code> object. <code>/en/path/to/page/</code> sets <code>request.LANGUAGE_CODE</code> to <code>en</code> otherwise <code>tr</code>.</p>
 <div class="codehilite"><pre><span></span><span class="c1"># add this to your settings/base.py</span>
-<span class="n">MIDDLEWARE</span> <span class="o">+=</span> <span class="p">[</span><span class="s1">&#39;baseapp.middlewares.CustomLocaleMiddleware&#39;</span><span class="p">]</span>
+<span class="n">MIDDLEWARE</span> <span class="o">+=</span> <span class="p">[</span><span class="s1">&#39;vb_baseapp.middlewares.CustomLocaleMiddleware&#39;</span><span class="p">]</span>
 </pre></div>
 
 
