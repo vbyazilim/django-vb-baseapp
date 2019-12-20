@@ -206,28 +206,30 @@ class CustomBaseModelAdminWithSoftDelete(CustomBaseModelAdmin):
         return custom_list_filters
 
     def get_actions(self, request):
+        user_has_delete_perm = request.user.has_perm(f'{self.model._meta.model_name}_delete')  # pylint: disable=W0212
         existing_actions = super().get_actions(request)
 
-        if request.GET.get('inactives', None) and 'delete_selected' in existing_actions:
-            existing_actions.pop('delete_selected', None)
+        if user_has_delete_perm:
+            if request.GET.get('inactives', None) and 'delete_selected' in existing_actions:
+                existing_actions.pop('delete_selected', None)
+                existing_actions.update(
+                    dict(
+                        recover_selected=(
+                            recover_selected,
+                            'recover_selected',
+                            _('Recover selected %(verbose_name_plural)s'),
+                        )
+                    )
+                )
             existing_actions.update(
                 dict(
-                    recover_selected=(
-                        recover_selected,
-                        'recover_selected',
-                        _('Recover selected %(verbose_name_plural)s'),
+                    hard_delete_selected=(
+                        hard_delete_selected,
+                        'hard_delete_selected',
+                        _('Hard delete selected %(verbose_name_plural)s'),
                     )
                 )
             )
-        existing_actions.update(
-            dict(
-                hard_delete_selected=(
-                    hard_delete_selected,
-                    'hard_delete_selected',
-                    _('Hard delete selected %(verbose_name_plural)s'),
-                )
-            )
-        )
         return existing_actions
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
@@ -289,7 +291,10 @@ class CustomBaseModelAdminWithSoftDelete(CustomBaseModelAdmin):
         return formfield
 
     def has_delete_permission(self, request, obj=None):
-        if obj is not None:
-            if obj.is_deleted:
-                return False
-        return True
+        has_delete = super().has_delete_permission(request, obj)
+        if has_delete:
+            if obj is not None:
+                if obj.is_deleted:
+                    return False
+            return True
+        return False
