@@ -197,7 +197,11 @@ class CustomBaseModelAdminWithSoftDelete(CustomBaseModelAdmin):
     def get_list_filter(self, request):
         list_filters = list(super().get_list_filter(request))
         custom_list_filters = []
-        custom_list_filters.append(ActiveInactiveFilter)
+
+        user_has_delete_perm = request.user.has_perm(f'{self.model._meta.model_name}_delete')  # pylint: disable=W0212
+        if user_has_delete_perm:
+            custom_list_filters.append(ActiveInactiveFilter)
+
         for list_filter in list_filters:
             new_filter = list_filter
             if isinstance(list_filter, str):
