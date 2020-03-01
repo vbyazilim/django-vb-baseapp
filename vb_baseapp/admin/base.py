@@ -298,9 +298,4 @@ class CustomBaseModelAdminWithSoftDelete(CustomBaseModelAdmin):
 
     def has_delete_permission(self, request, obj=None):
         has_delete = super().has_delete_permission(request, obj)
-        if has_delete:
-            if obj is not None:
-                if obj.is_deleted:
-                    return False
-            return True
-        return False
+        return has_delete
