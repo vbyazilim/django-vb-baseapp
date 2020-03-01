@@ -175,13 +175,14 @@ class CustomBaseModelAdminWithSoftDelete(CustomBaseModelAdmin):
         extra_context['show_goback'] = getattr(self, 'show_goback_button', True)
         _change_view = super().change_view(request, object_id, form_url, extra_context=extra_context)
 
-        current_instance = _change_view.context_data['original']
-        if current_instance.is_deleted:
-            _change_view.context_data['show_softdeleted_object_message'] = True
-            _change_view.context_data['show_save_and_continue'] = False
-            _change_view.context_data['show_save_and_add_another'] = False
-            _change_view.context_data['show_hard_delete'] = True
-            _change_view.context_data['show_recover'] = True
+        if hasattr(_change_view, 'context_data'):
+            current_instance = _change_view.context_data['original']
+            if current_instance.is_deleted:
+                _change_view.context_data['show_softdeleted_object_message'] = True
+                _change_view.context_data['show_save_and_continue'] = False
+                _change_view.context_data['show_save_and_add_another'] = False
+                _change_view.context_data['show_hard_delete'] = True
+                _change_view.context_data['show_recover'] = True
         return _change_view
 
     def autocomplete_view(self, request):
