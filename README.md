@@ -4,7 +4,7 @@
 ![Version](https://img.shields.io/badge/version-1.1.12-orange.svg)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/4c6aa76f09fd437eb3888855fccc9604)](https://www.codacy.com/manual/vigo/django-vb-baseapp?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=vbyazilim/django-vb-baseapp&amp;utm_campaign=Badge_Grade)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
-[![Downloads](https://pepy.tech/badge/django-vb-admin)](https://pepy.tech/project/django-vb-admin)
+[![Downloads](https://pepy.tech/badge/django-vb-baseapp)](https://pepy.tech/project/django-vb-baseapp)
 
 # django-vb-baseapp
 
