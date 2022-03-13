@@ -47,12 +47,12 @@ $ pip install django-vb-baseapp
 
 <table>
     <tr>
-        <td><img src="https://github.com/vbyazilim/django-vb-baseapp/raw/master/screenshots/vb_baseapp-admin-changelist-1.png" alt="Change list 1"></td>
-        <td><img src="https://github.com/vbyazilim/django-vb-baseapp/raw/master/screenshots/vb_baseapp-admin-changelist-2.png" alt="Change list 2"></td>
+        <td><img src="https://github.com/vbyazilim/django-vb-baseapp/raw/main/screenshots/vb_baseapp-admin-changelist-1.png" alt="Change list 1"></td>
+        <td><img src="https://github.com/vbyazilim/django-vb-baseapp/raw/main/screenshots/vb_baseapp-admin-changelist-2.png" alt="Change list 2"></td>
     </tr>
     <tr>
-        <td><img src="https://github.com/vbyazilim/django-vb-baseapp/raw/master/screenshots/vb_baseapp-admin-change-form-1.png" alt="Change form 1"></td>
-        <td><img src="https://github.com/vbyazilim/django-vb-baseapp/raw/master/screenshots/vb_baseapp-admin-change-form-2.png" alt="Change form 2"></td>
+        <td><img src="https://github.com/vbyazilim/django-vb-baseapp/raw/main/screenshots/vb_baseapp-admin-change-form-1.png" alt="Change form 1"></td>
+        <td><img src="https://github.com/vbyazilim/django-vb-baseapp/raw/main/screenshots/vb_baseapp-admin-change-form-2.png" alt="Change form 2"></td>
     </tr>
 </table>
 
